@@ -1,117 +1,120 @@
+
+import Tracker from "./tracking.js";
+
 (function () {
   'use strict';
 
-  class Tracker{
-    constructor() {
-      this.gameID = null;
-      this.playerName = '';
-      this.won = null;
-      this.game = {};
-      this.rounds = {};
-      this.hints = {};
-      this.turnTimes = {};
-      this.feedback = {};
-    }
-    addRound(noRound, roundGuess) {
-      if (!(noRound in this.rounds)) {
-        this.rounds[noRound] = roundGuess;
-      }
-      console.log(`Round Added. Current rounds:${JSON.stringify(this.rounds)}`);
-    }
+  // class Tracker{
+  //   constructor() {
+  //     this.gameID = null;
+  //     this.playerName = '';
+  //     this.won = null;
+  //     this.game = {};
+  //     this.rounds = {};
+  //     this.hints = {};
+  //     this.turnTimes = {};
+  //     this.feedback = {};
+  //   }
+  //   addRound(noRound, roundGuess) {
+  //     if (!(noRound in this.rounds)) {
+  //       this.rounds[noRound] = roundGuess;
+  //     }
+  //     console.log(`Round Added. Current rounds:${JSON.stringify(this.rounds)}`);
+  //   }
 
-    addTurnTime(noRound, startTime, endTime) {
-      if (!(noRound in this.turnTimes)) {
-        this.turnTimes[noRound] = Math.round(endTime - startTime);
-      }
-      console.log(`TurnTime Added. Current times:${JSON.stringify(this.turnTimes)}`);
-    }
+  //   addTurnTime(noRound, startTime, endTime) {
+  //     if (!(noRound in this.turnTimes)) {
+  //       this.turnTimes[noRound] = Math.round(endTime - startTime);
+  //     }
+  //     console.log(`TurnTime Added. Current times:${JSON.stringify(this.turnTimes)}`);
+  //   }
 
-    addHint(noRound, hint) {
-      if (!(noRound in this.hints)) {
-        this.hints[noRound] = hint;
-      }
-      console.log(`Hint Added. Current hints:${JSON.stringify(this.hints)}`);
-    }
+  //   addHint(noRound, hint) {
+  //     if (!(noRound in this.hints)) {
+  //       this.hints[noRound] = hint;
+  //     }
+  //     console.log(`Hint Added. Current hints:${JSON.stringify(this.hints)}`);
+  //   }
 
-    addFeedback(noRound, feedback) {
-      if (!(noRound in this.feedback)) {
-        this.feedback[noRound] = feedback;
-      }
-      console.log(`Feedback Added. Current Feedback:${JSON.stringify(this.feedback)}`);
-    }
+  //   addFeedback(noRound, feedback) {
+  //     if (!(noRound in this.feedback)) {
+  //       this.feedback[noRound] = feedback;
+  //     }
+  //     console.log(`Feedback Added. Current Feedback:${JSON.stringify(this.feedback)}`);
+  //   }
 
-    saveGameTracker() {
-    //  this.game[this.gameID] = (this.won, this.rounds, this.turnTimes, this.hints);
-    }
+  //   saveGameTracker() {
+  //   //  this.game[this.gameID] = (this.won, this.rounds, this.turnTimes, this.hints);
+  //   }
 
-    clearTemp() {
-      this.won = null;
-      this.rounds = {};
-      this.hints = {};
-      this.turnTimes = {};
-    }
+  //   clearTemp() {
+  //     this.won = null;
+  //     this.rounds = {};
+  //     this.hints = {};
+  //     this.turnTimes = {};
+  //   }
 
-    write2File() {
-      this.gameData = {gameID: this.gameID,
-        playerName: this.playerName,
-        won: this.won,
-        noRounds: this.rounds.length,
-        rounds: this.rounds,
-        turnTimes_ms: this.turnTimes,
-        hints: this.hints};
+  //   write2File() {
+  //     this.gameData = {gameID: this.gameID,
+  //       playerName: this.playerName,
+  //       won: this.won,
+  //       noRounds: this.rounds.length,
+  //       rounds: this.rounds,
+  //       turnTimes_ms: this.turnTimes,
+  //       hints: this.hints};
 
-      localStorage.setItem('GameData', JSON.stringify(this.gameData));
-      this.clearTemp();
-    }
+  //     localStorage.setItem('GameData', JSON.stringify(this.gameData));
+  //     this.clearTemp();
+  //   }
 
-    downloadFile() {
-      let blob = new Blob([JSON.stringify(this.gameData, null, 2)], {type : 'application/json'});
+  //   downloadFile() {
+  //     let blob = new Blob([JSON.stringify(this.gameData, null, 2)], {type : 'application/json'});
 
-      var saveBlob = (function () {
-        var a = document.createElement("a");
-        document.body.appendChild(a);
-        a.style = "display: none";
-        return function (blob, fileName) {
-          var url = window.URL.createObjectURL(blob);
-          a.href = url;
-          a.download = fileName;
-          a.click();
-          window.URL.revokeObjectURL(url);
-        };
-      }());
-      saveBlob(blob, `${this.gameID}_gameData.json`);
-    }
+  //     var saveBlob = (function () {
+  //       var a = document.createElement("a");
+  //       document.body.appendChild(a);
+  //       a.style = "display: none";
+  //       return function (blob, fileName) {
+  //         var url = window.URL.createObjectURL(blob);
+  //         a.href = url;
+  //         a.download = fileName;
+  //         a.click();
+  //         window.URL.revokeObjectURL(url);
+  //       };
+  //     }());
+  //     saveBlob(blob, `${this.gameID}_gameData.json`);
+  //   }
 
-  }
+  // }
 
   let code = [], // Color sequence the player needs to guess
-      guess = [], // Color sequence of player's guesses
-      hint = [],
-      options = document.getElementsByClassName('option'),
-      inputRows = document.getElementsByClassName('guess'),
-      hintContainer = document.getElementsByClassName('hint'),
-      secretSockets = document.getElementsByClassName('secret socket'),
-      modalOverlay = document.getElementById('modalOverlay'),
-      modalMessage = document.getElementById('modalMessage'),
-      infoOverlay = document.getElementById('infoOverlay'),
-      instructions = document.getElementById('instructions'),
-      rowIncrement = 1,
-      hintIncrement = 1,
-      pegs = {
-        1: 'green',
-        2: 'purple',
-        3: 'red',
-        4: 'yellow',
-        5: 'blue',
-        6: 'brown'
-      },
-      startTime = null,
-      endTime = null;
+    guess = [], // Color sequence of player's guesses
+    hint = [],
+    options = document.getElementsByClassName('option'),
+    inputRows = document.getElementsByClassName('guess'),
+    hintContainer = document.getElementsByClassName('hint'),
+    secretSockets = document.getElementsByClassName('secret socket'),
+    modalOverlay = document.getElementById('modalOverlay'),
+    modalMessage = document.getElementById('modalMessage'),
+    infoOverlay = document.getElementById('infoOverlay'),
+    instructions = document.getElementById('instructions'),
+    rowIncrement = 1,
+    hintIncrement = 1,
+    pegs = {
+      1: 'green',
+      2: 'purple',
+      3: 'red',
+      4: 'yellow',
+      5: 'blue',
+      6: 'brown'
+    },
+    startTime = null,
+    endTime = null;
   let track = new Tracker();
   track.gameID = 0;
   track.playerName = 'Player1';
 
-  function gameSetup () {
+  function gameSetup() {
     generateSecretCode(1, 7);
     startTime = performance.now();
     // Add event listener to every code option button
@@ -142,7 +145,7 @@
 
   }
 
-  function insertGuess () {
+  function insertGuess() {
     var self = this;
     var slots = inputRows[inputRows.length - rowIncrement].getElementsByClassName('socket');
     if (guess.length < 4) {
@@ -154,8 +157,8 @@
     }
 
   }
-    
-  function compare () {
+
+  function compare() {
     var isMatch = true;
     var codeCopy = code.slice(0);
 
@@ -187,12 +190,12 @@
     return isMatch;
   }
 
-  function insertPeg (type) {
+  function insertPeg(type) {
     var sockets = hintContainer[hintContainer.length - hintIncrement].getElementsByClassName('js-hint-socket');
     sockets[0].className = 'socket ' + type;
   }
 
-  function deleteLast () {
+  function deleteLast() {
     if (guess.length !== 0) {
       var slots = inputRows[inputRows.length - rowIncrement].getElementsByClassName('socket');
       slots[guess.length - 1].className = 'socket'; // Insert node into page
@@ -201,13 +204,13 @@
     }
   }
 
-  function submitFeedback (ev) {
+  function submitFeedback(ev) {
     ev.preventDefault();
     //console.log(document.getElementById('inputfield').value);
     track.addFeedback(rowIncrement, document.getElementById('inputfield').value);
   }
 
-  function submitGuess () {
+  function submitGuess() {
 
     if (guess.length === 4) {
       document.getElementById("submit").disabled = true;
@@ -235,7 +238,7 @@
 
   }
 
-  function newGame () {
+  function newGame() {
     //saveGameTracker
     guess = [];        // Reset guess array
     hint = [];
@@ -246,12 +249,12 @@
     gameSetup();           // Prepare the game
   }
 
-  function hideModal () {
+  function hideModal() {
     modalOverlay.className = '';
   }
 
 
-  function clearBoard () {
+  function clearBoard() {
     // Clear the guess sockets
     for (var i = 0; i < inputRows.length; i++) {
       inputRows[i].innerHTML = '';
@@ -280,20 +283,20 @@
   }
 
   // Creates a color sequence that the player needs to guess
-  function generateSecretCode (min, max) {
+  function generateSecretCode(min, max) {
     for (var i = 0; i < 4; i++)
       code[i] = Math.floor(Math.random() * (max - min)) + min;
   }
 
   // Once the player runs out of guesses or crack the code - the sequence is revealed
-  function revealCode () {
+  function revealCode() {
     for (var i = 0; i < secretSockets.length; i++) {
       secretSockets[i].className += ' ' + pegs[code[i]];
       secretSockets[i].innerHTML = ''; // Remove "?" from the socket
     }
   }
 
-  function gameOver () {
+  function gameOver() {
     // Disable color options
     for (var i = 0; i < options.length; i++)
       options[i].removeEventListener('click', insertGuess, false);
@@ -301,7 +304,7 @@
     revealCode();
   }
 
-  function gameState (state) {
+  function gameState(state) {
     track.write2File();
     track.downloadFile();
     gameOver();
@@ -314,8 +317,8 @@
       document.getElementById('hideModal').onclick = hideModal;
     } else
       modalMessage.innerHTML = '<h2>You failed...</h2> <p>What a shame... Look on the bright side - you weren\'t even close.</p> <button class="large" id="hideModal">OK</button> <button id="restartGame" class="large primary">Restart</button>';
-      document.getElementById('restartGame').onclick = newGame;
-      document.getElementById('hideModal').onclick = hideModal;
+    document.getElementById('restartGame').onclick = newGame;
+    document.getElementById('hideModal').onclick = hideModal;
   }
 
   gameSetup(); // Run the game
