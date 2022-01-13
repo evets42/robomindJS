@@ -2,7 +2,10 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,12 +13,14 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, user-scalable=no">
 
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,800,800italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,800,800italic' rel='stylesheet'
+    type='text/css'>
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
 </head>
+
 <body>
-<!--[if lt IE 7]>
+  <!--[if lt IE 7]>
   <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
@@ -179,36 +184,38 @@
           <button value="6" id="brown" class="option brown"></button>
           <button id="delete" class="">&#8672;</button>
         </div>
-        <div><div class="horizontalgap" style="width:10px"></div> </div>
+
       </div>
-      <div><div class="horizontalgap" style="width:10px"></div> </div>
-    <div id="textinput">
-      <div class="container">
-        <form>
-          <label for="feedback">Your thoughts?</label><br>
-          <textarea id="inputfield" rows = "5" placeholder="Please describe your strategy for this move..."></textarea><br>
-          <button id="submitFeedback" class="">Submit Feedback</button>
-        </form>
+
+      <div id="textinput">
+        <div class="container">
+          <form>
+            <label for="feedback">Your thoughts?</label>
+            <textarea id="inputfield" rows="5" placeholder="Please describe your strategy for this move..."></textarea>
+            <button id="submitFeedback" class="">Submit Feedback</button>
+          </form>
+        </div>
       </div>
-    </div>
     </div>
     <div class="info">
       <button id="info" class="">&#9432; How to Play</button>
     </div>
 
     <div id="infoOverlay">
-    <div id="instructions">
-      <h3>How to play</h3>
-      <p><strong>Goal:</strong> Guess the pattern, in both order and color</p>
-      <p>Insert your guess sequence into the empty sockets</p>
-      <p>Feedback is provided on the right side in the form of black and white pegs.
+      <div id="instructions">
+        <h3>How to play</h3>
+        <p><strong>Goal:</strong> Guess the pattern, in both order and color</p>
+        <p>Insert your guess sequence into the empty sockets</p>
+        <p>Feedback is provided on the right side in the form of black and white pegs.
         <ul>
-          <li>Black peg corresponds to one peg from your color sequence that is both the right color and in the right position</li>
-          <li>White peg corresponds to one peg from your color sequence that is the right color but NOT in the right position</li>
+          <li>Black peg corresponds to one peg from your color sequence that is both the right color and in the right
+            position</li>
+          <li>White peg corresponds to one peg from your color sequence that is the right color but NOT in the right
+            position</li>
         </ul>
-      </p>
-      <button id="close-info">Close</button>
-    </div>
+        </p>
+        <button id="close-info">Close</button>
+      </div>
     </div>
 
 
@@ -228,4 +235,5 @@
 
 
 </body>
+
 </html>
