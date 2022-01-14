@@ -144,7 +144,7 @@ hr {
 
 .game-container {
   width: 200px;
-  margin: 0;
+  margin-bottom: 20px;
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: repeat(3,auto);
@@ -286,11 +286,13 @@ hr {
   margin-top: 4px;
   grid-row: 3/4;
   grid-column: 1/3;
+  margin-bottom: 20px
 }
 
-#textinput .form {
+#textinput form {
   display: flex;
   flex-direction: column;
+  gap: 2px;
 }
 
 #instructions, #modalMessage {
@@ -474,6 +476,8 @@ button.primary {
   font-size: 12px;
   font-weight: 200;
   background-color: #c7bf8d;
+  /*margin-top: 2px;*/
+
 }
 
 .submitFeedback {
