@@ -1,6 +1,6 @@
 
-//import Tracker from "./tracking.js";
-
+import Tracker from "./tracking.js";
+/*
 class Tracker {
 
   constructor() {
@@ -88,7 +88,7 @@ class Tracker {
 
 }
 //module.exports.Tracker = Tracker;
-
+*/
 (function () {
   'use strict';
 
