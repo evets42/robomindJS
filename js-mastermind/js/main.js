@@ -132,6 +132,8 @@ class Tracker {
     document.getElementById('submit').onclick = submitGuess;
     document.getElementById("submit").disabled = true;
     document.getElementById('submitFeedback').onclick = submitFeedback;
+    document.getElementById('submitFeedback').disabled = true;
+//   document.getElementById('inputfield').disabled = true;
     document.getElementById('info').onclick = showInfo;
     document.getElementById('close-info').onclick = showInfo;
     infoOverlay.className = '';
@@ -142,11 +144,15 @@ class Tracker {
   }
 
   function showInfo() {
+
     if (infoOverlay.className == '') {
       infoOverlay.className = 'show';
+      console.log('deine mama');
+      return
     }
     if (infoOverlay.className == 'show') {
       infoOverlay.className = '';
+      console.log('deine mama2');
     }
 
   }
@@ -158,7 +164,9 @@ class Tracker {
       slots[guess.length].className = slots[guess.length].className + ' peg ' + self.id; // Insert node into page
       guess.push(+(self.value));
     }
+
     if (guess.length == 4) {
+      document.getElementsByTagName('textarea')[0].className = 'ignored';
       document.getElementById("submit").disabled = false;
     }
 
@@ -214,13 +222,15 @@ class Tracker {
     ev.preventDefault();
     //console.log(document.getElementById('inputfield').value);
     track.addFeedback(rowIncrement, document.getElementById('inputfield').value);
+    document.getElementById('inputfield').value('');
   }
 
-  function submitGuess() {
+  function submitGuess(ev) {
+
 
     if (guess.length === 4) {
-      document.getElementById("submit").disabled = true;
 
+      document.getElementById("submit").disabled = true;
 
       let guessTemp = guess.slice();
       // TRACKER INPUT
@@ -232,12 +242,23 @@ class Tracker {
       track.addTurnTime(rowIncrement, startTime, endTime);
       startTime = performance.now();
 
+
+      ev.preventDefault();
+
+      let feedbackTemp = document.getElementById('inputfield').value.slice(0);
+      track.addFeedback(rowIncrement, feedbackTemp);
+
+      document.getElementById('inputfield').value = '';
+      document.getElementById('inputfield').className = '';
+
+
       if (compare()) {
         track.won = true;
         gameState('won');
       }
       else
         rowIncrement += 1;
+
     }
     if (rowIncrement === inputRows.length + 1 && !compare())
       gameState('lost');

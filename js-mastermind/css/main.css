@@ -14,9 +14,7 @@
  button,
  input,
  select,
- textarea {
-  color: #222;
-}
+
 
 html {
   font-size: 1em;
@@ -127,15 +125,18 @@ h1 {
 
 .wrapper {
   display: block;
-  width: 400px;
+  width: 320px;
   margin: 0 auto;
 }
 
 header {
-  display: block;
+  display: flex;
   padding-top: 45px;
   padding-bottom: 20px;
   text-align: center;
+  justify-content: space-around;
+  align-items: center;
+
 }
 
 hr {
@@ -433,6 +434,28 @@ hr {
   }
 }
 
+textarea:disabled, textarea[disabled] {
+  border: none;
+  background-color: #999999;
+}
+textarea.ignored {
+  -webkit-animation-name: thumb;
+  -webkit-transform: scaleX(1.3);
+  -moz-transform: scaleX(1.3);
+  -webkit-transform-origin: center;
+  -moz-transform-origin: center;
+  -webkit-animation-duration: 1000ms;
+  -webkit-animation-iteration-count: infinite; /* The magic keyword for infinite */
+  -webkit-animation-timing-function: linear;
+}
+
+hr {
+  position: relative;
+  top: 92px;
+  left: -300px;
+  width: 200px;
+}
+
 button {
   border: none;
   border-radius: 3px;
@@ -450,7 +473,6 @@ button[disabled]{
   background-color: #cccccc;
   color: #999999;
 }
-
 
 button.large {
   padding: 15px 20px;
@@ -473,8 +495,9 @@ button.primary {
 }
 
 #submitFeedback {
-  font-size: 12px;
-  font-weight: 200;
+  visibility: hidden;
+  font-size: 13px;
+  font-weight: 400;
   background-color: #c7bf8d;
   /*margin-top: 2px;*/
 
@@ -543,7 +566,6 @@ footer a {
     margin-bottom: 50px;
   }
   #instructions {
-    display: none;
   }
   #options {
     width: 100%;
@@ -563,6 +585,15 @@ footer a {
   #textinput {
     padding-left: 40px;
   }
+
+  inputfield:disabled, inputfield[disabled] {
+    border: none;
+    background-color: #666666;
+    color: #666666;
+  }
+
+
+
 }
 
 
