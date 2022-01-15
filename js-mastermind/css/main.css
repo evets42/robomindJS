@@ -298,6 +298,7 @@ hr {
 
 #instructions, #modalMessage {
   position: fixed;
+  color: #c7bf8d;
   top: 50%;
   left: 50%;
   width: 50%;
@@ -348,23 +349,33 @@ hr {
   opacity: 1;
 }
 
-#modalOverlay.won, #modalMessage {
-  background-color: #8FBE00;
+#modalOverlay.won , #modalMessage {
+  background-color: rgba(143, 190, 0, .2);
+ /* background-color: #8FBE00;*/
   border: 5px solid #fff;
+  /*opacity: 0.7;*/
+
 }
 
-#modalOverlay.lost {
+
+
+#modalOverlay.lost  {
   background-color: rgba(226, 45, 45, .5);
   visibility: visible;
   opacity: 1;
 }
 
-#modalOverlay.lost, #modalMessage {
-  background-color: #E22D2D;
+#modalOverlay.lost , #modalMessage {
+  background-color: rgba(226, 45, 45, .2);
+  /*background-color: #E22D2D;*/
   border: 5px solid #fff;
+  /*opacity: 0.7;*/
 }
 
-
+#modalMessage {
+  background-color: #222222;
+  opacity: 0.8;
+}
 
 @-webkit-keyframes bounceIn {
   0%, 20%, 40%, 60%, 80%, 100% {
