@@ -558,21 +558,9 @@ footer a {
 @media (max-width: 768px) {
   .wrapper,
   .container {
-    width: 100%;
     box-sizing: border-box;
   }
-  #guesses,
-  #hints {
-    margin-bottom: 50px;
-  }
-  #instructions {
-  }
-  #options {
-    width: 100%;
-    bottom: 0;
-    background-color: #ece5ce;
-    padding-bottom: 10%;
-  }
+  
   #options button {
     /* width: 10%;
     height: 0;
@@ -581,19 +569,11 @@ footer a {
   .option {
     margin-right: 0;
   }
-
+/*
   #textinput {
     padding-left: 40px;
   }
-
-  inputfield:disabled, inputfield[disabled] {
-    border: none;
-    background-color: #666666;
-    color: #666666;
-  }
-
-
-
+  */
 }
 
 
