@@ -131,7 +131,7 @@ h1 {
 
 header {
   display: flex;
-  padding-top: 45px;
+  padding-top: 50px;
   padding-bottom: 20px;
   text-align: center;
   justify-content: space-around;
@@ -556,11 +556,13 @@ footer a {
 }
 
 @media (max-width: 768px) {
+
   .wrapper,
   .container {
     box-sizing: border-box;
+    max-height: 800px;
   }
-  
+
   #options button {
     /* width: 10%;
     height: 0;
