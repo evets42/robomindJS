@@ -58,7 +58,8 @@ export default class {
             noRounds: this.rounds.length,
             rounds: this.rounds,
             turnTimes_ms: this.turnTimes,
-            hints: this.hints
+            hints: this.hints,
+            feedback: this.feedback
         };
 
         localStorage.setItem('GameData', JSON.stringify(this.gameData));
