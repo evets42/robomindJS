@@ -1,5 +1,46 @@
+import Tracker from "./tracking.js"
 
-import Tracker from "./tracking.js";
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
+
+// https://firebase.google.com/docs/web/setup#available-libraries
+import {
+  getDatabase, ref, set, onValue, get, child, update, remove
+  } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-database.js"
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyC9sRbGfIkkWDNjjlRKh-4WNDuSGIgUsec",
+  authDomain: "robomind-tracking.firebaseapp.com",
+  projectId: "robomind-tracking",
+  storageBucket: "robomind-tracking.appspot.com",
+  messagingSenderId: "992842688045",
+  appId: "1:992842688045:web:a7e89ab5e9419fb8adbaa4"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+function writeUserData(userId, name, email) {
+  const db = getDatabase(app);
+
+  set(ref(db, 'users/' + userId), {
+    username: name,
+    email: email,
+  });
+}
+writeUserData("99","Test","test@test.de");
+let userId = "99";
+const dbRef = ref(getDatabase());
+get(child(dbRef, `users/${userId}`)).then((snapshot) => {
+  if (snapshot.exists()) {
+    console.log("lalala",snapshot.val());
+  } else {
+    console.log("No data available");
+  }
+}).catch((error) => {
+  console.error(error);
+});
+
 /*
 class Tracker {
 
