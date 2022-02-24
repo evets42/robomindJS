@@ -268,7 +268,9 @@ import Tracker from "./tracking.js"
   function generateSecretCode(min, max) {
     for (var i = 0; i < 4; i++)
       code[i] = Math.floor(Math.random() * (max - min)) + min;
+    track.correctCode = code.slice(0,4);
   }
+
 
   // Once the player runs out of guesses or crack the code - the sequence is revealed
   function revealCode() {

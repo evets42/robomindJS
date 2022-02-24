@@ -33,6 +33,7 @@ export default class {
         this.turnTimes = {}
         this.feedback = {}
         this.userId = 0;
+        this.correctCode = [];
     }
 
     addRound(noRound, roundGuess) {
@@ -158,6 +159,7 @@ export default class {
         set(ref(db, `game_data/${this.userId}/${this.gameId}`), {
             playerName: this.playerName,
             gameId: this.gameId,
+            correctCode: this.correctCode,
             won: this.won,
             rounds: this.rounds,
             turnTimes_ms: this.turnTimes,
@@ -173,6 +175,7 @@ export default class {
         this.gameData = {
             gameId: this.gameId,
             playerName: this.playerName,
+            correctCode: this.correctCode,
             won: this.won,
             rounds: this.rounds,
             turnTimes_ms: this.turnTimes,
