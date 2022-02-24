@@ -1,135 +1,6 @@
+
 import Tracker from "./tracking.js"
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
-
-// https://firebase.google.com/docs/web/setup#available-libraries
-import {
-  getDatabase, ref, set, onValue, get, child, update, remove
-  } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-database.js"
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyC9sRbGfIkkWDNjjlRKh-4WNDuSGIgUsec",
-  authDomain: "robomind-tracking.firebaseapp.com",
-  projectId: "robomind-tracking",
-  storageBucket: "robomind-tracking.appspot.com",
-  messagingSenderId: "992842688045",
-  appId: "1:992842688045:web:a7e89ab5e9419fb8adbaa4"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-function writeUserData(userId, name, email) {
-  const db = getDatabase(app);
-
-  set(ref(db, 'users/' + userId), {
-    username: name,
-    email: email,
-  });
-}
-writeUserData("99","Test","test@test.de");
-let userId = "99";
-const dbRef = ref(getDatabase());
-get(child(dbRef, `users/${userId}`)).then((snapshot) => {
-  if (snapshot.exists()) {
-    console.log("lalala",snapshot.val());
-  } else {
-    console.log("No data available");
-  }
-}).catch((error) => {
-  console.error(error);
-});
-
-/*
-class Tracker {
-
-  constructor() {
-    this.gameID = ""
-    this.playerName = ""
-    this.won = ""
-    this.game = {}
-    this.rounds = {}
-    this.hints = {}
-    this.turnTimes = {}
-    this.feedback = {}
-  }
-
-  addRound(noRound, roundGuess) {
-    if (!(noRound in this.rounds)) {
-      this.rounds[noRound] = roundGuess;
-    }
-    console.log(`Round Added. Current rounds:${JSON.stringify(this.rounds)}`);
-  }
-
-  addTurnTime(noRound, startTime, endTime) {
-    if (!(noRound in this.turnTimes)) {
-      this.turnTimes[noRound] = Math.round(endTime - startTime);
-    }
-    console.log(`TurnTime Added. Current times:${JSON.stringify(this.turnTimes)}`);
-  }
-
-  addHint(noRound, hint) {
-    if (!(noRound in this.hints)) {
-      this.hints[noRound] = hint;
-    }
-    console.log(`Hint Added. Current hints:${JSON.stringify(this.hints)}`);
-  }
-
-  addFeedback(noRound, feedback) {
-    if (!(noRound in this.feedback)) {
-      this.feedback[noRound] = feedback;
-    }
-    console.log(`Feedback Added. Current Feedback:${JSON.stringify(this.feedback)}`);
-  }
-
-  saveGameTracker() {
-    //  this.game[this.gameID] = (this.won, this.rounds, this.turnTimes, this.hints);
-  }
-
-  clearTemp() {
-    this.won = null;
-    this.rounds = {};
-    this.hints = {};
-    this.turnTimes = {};
-  }
-
-  write2File() {
-    this.gameData = {
-      gameID: this.gameID,
-      playerName: this.playerName,
-      won: this.won,
-      noRounds: this.rounds.length,
-      rounds: this.rounds,
-      turnTimes_ms: this.turnTimes,
-      hints: this.hints
-    };
-
-    localStorage.setItem('GameData', JSON.stringify(this.gameData));
-    this.clearTemp();
-  }
-
-  downloadFile() {
-    let blob = new Blob([JSON.stringify(this.gameData, null, 2)], { type: 'application/json' });
-
-    var saveBlob = (function () {
-      var a = document.createElement("a");
-      document.body.appendChild(a);
-      a.style = "display: none";
-      return function (blob, fileName) {
-        var url = window.URL.createObjectURL(blob);
-        a.href = url;
-        a.download = fileName;
-        a.click();
-        window.URL.revokeObjectURL(url);
-      };
-    }());
-    saveBlob(blob, `${this.gameID}_gameData.json`);
-  }
-
-}
-//module.exports.Tracker = Tracker;
-*/
 (function () {
   'use strict';
 
@@ -138,13 +9,16 @@ class Tracker {
     guess = [], // Color sequence of player's guesses
     hint = [],
     options = document.getElementsByClassName('option'),
+    restart = document.getElementById('restart'),
     inputRows = document.getElementsByClassName('guess'),
     hintContainer = document.getElementsByClassName('hint'),
     secretSockets = document.getElementsByClassName('secret socket'),
     modalOverlay = document.getElementById('modalOverlay'),
     modalMessage = document.getElementById('modalMessage'),
     infoOverlay = document.getElementById('infoOverlay'),
+    startOverlay = document.getElementById('startOverlay'),
     instructions = document.getElementById('instructions'),
+
     rowIncrement = 1,
     hintIncrement = 1,
     pegs = {
@@ -158,8 +32,21 @@ class Tracker {
     startTime = null,
     endTime = null;
   let track = new Tracker();
-  track.gameID = 0;
-  track.playerName = 'Player1';
+
+  startOverlay.className = 'show';
+  //let Recorder = new Rec;
+  //track.gameId = 0;
+  //Simulate name entering overlay
+  //track.playerName = 'Steve';
+  async function readUserData() {
+    track.userId = await track.readUserId();
+    console.log("userId in main.js: "+track.userId);
+    track.gameId = await track.readLastGameId(track.userId);
+
+    //new increase new gameId by 1
+    track.gameId++;
+    console.log("gameId in main.js: "+track.gameId);
+  }
 
   function gameSetup() {
     generateSecretCode(1, 7);
@@ -171,31 +58,24 @@ class Tracker {
     document.getElementById('newGame').onclick = newGame;
     document.getElementById('delete').onclick = deleteLast;
     document.getElementById('submit').onclick = submitGuess;
+    document.getElementById('submitName').onclick = submitName;
     document.getElementById("submit").disabled = true;
     document.getElementById('submitFeedback').onclick = submitFeedback;
     document.getElementById('submitFeedback').disabled = true;
 //   document.getElementById('inputfield').disabled = true;
     document.getElementById('info').onclick = showInfo;
-    document.getElementById('close-info').onclick = showInfo;
+    document.getElementById('close-info').onclick = hideInfo;
     infoOverlay.className = '';
-
-    track.gameID++;
+    track.gameId++;
     console.log(`Code: ${code}`)
-
   }
 
   function showInfo() {
+    infoOverlay.className = 'show';
+  }
 
-    if (infoOverlay.className == '') {
-      infoOverlay.className = 'show';
-      console.log('deine mama');
-      return
-    }
-    if (infoOverlay.className == 'show') {
-      infoOverlay.className = '';
-      console.log('deine mama2');
-    }
-
+  function hideInfo() {
+    infoOverlay.className = '';
   }
 
   function insertGuess() {
@@ -256,6 +136,7 @@ class Tracker {
       slots[guess.length - 1].className = 'socket'; // Insert node into page
       guess.pop();
       document.getElementById("submit").disabled = true;
+      document.getElementById('inputfield').className = '';
     }
   }
 
@@ -268,42 +149,47 @@ class Tracker {
 
   function submitGuess(ev) {
 
+    let feedbackTemp = document.getElementById('inputfield').value.slice(0);
 
     if (guess.length === 4) {
 
-      document.getElementById("submit").disabled = true;
+      if (feedbackTemp.length >= 10) {
+        hideRestart();
 
-      let guessTemp = guess.slice();
-      // TRACKER INPUT
-      // - ADD GUESSES IN CURRENT ROUND
-      track.addRound(rowIncrement, guessTemp);
+        document.getElementById("submit").disabled = true;
+        let guessTemp = guess.slice();
+        // TRACKER INPUT
+        // - ADD GUESSES IN CURRENT ROUND
+        track.addRound(rowIncrement, guessTemp);
 
-      // - ADD TURNTIME IN CURRENT ROUND
-      endTime = performance.now();
-      track.addTurnTime(rowIncrement, startTime, endTime);
-      startTime = performance.now();
+        // - ADD TURNTIME IN CURRENT ROUND
+        endTime = performance.now();
+        track.addTurnTime(rowIncrement, startTime, endTime);
+        startTime = performance.now();
 
+        ev.preventDefault();
 
-      ev.preventDefault();
+        track.addFeedback(rowIncrement, feedbackTemp);
 
-      let feedbackTemp = document.getElementById('inputfield').value.slice(0);
-      track.addFeedback(rowIncrement, feedbackTemp);
+        document.getElementById('inputfield').value = '';
+        document.getElementById('inputfield').className = '';
+        document.getElementById('inputfield').style.borderColor = '';
 
-      document.getElementById('inputfield').value = '';
-      document.getElementById('inputfield').className = '';
+        if (compare()) {
+          track.won = true;
+          gameState('won');
+        } else rowIncrement += 1;
 
+        if (rowIncrement === inputRows.length + 1 && !compare()) {
+          track.won = false;
+          gameState('lost');
+        }
+      } else {
+        let myArray = ['Red','Yellow','Pink', 'Cyan'];
+        document.getElementById('inputfield').style.borderColor = myArray[(Math.random() * myArray.length) | 0]
 
-      if (compare()) {
-        track.won = true;
-        gameState('won');
       }
-      else
-        rowIncrement += 1;
-
     }
-    if (rowIncrement === inputRows.length + 1 && !compare())
-      gameState('lost');
-
   }
 
   function newGame() {
@@ -318,9 +204,28 @@ class Tracker {
   }
 
   function hideModal() {
-    modalOverlay.className = '';
+    modalOverlay.className = 'show';
+    showRestart();
   }
 
+  function showRestart() {
+    console.log("showRestart");
+    restart.className = '';
+  }
+
+  function hideRestart() {
+    console.log("hideRestart")
+    restart.className = 'hidden';
+  }
+
+  function submitName() {
+    let name =  document.getElementById('nameInput').value.slice(0);
+    if (name != '' && name.length >= 3) {
+      track.playerName = name
+      hideStartOverlay();
+      readUserData();
+    }
+  }
 
   function clearBoard() {
     // Clear the guess sockets
@@ -350,6 +255,14 @@ class Tracker {
     document.getElementsByTagName('body')[0].className = ''; // Reset background
   }
 
+  function hideStartOverlay(){
+    startOverlay.className = '';
+  }
+
+  function showStartOverlay(){
+    startOverlay.className = 'show';
+  }
+
   // Creates a color sequence that the player needs to guess
   function generateSecretCode(min, max) {
     for (var i = 0; i < 4; i++)
@@ -374,25 +287,23 @@ class Tracker {
 
   function gameState(state) {
     track.write2File();
+    track.write2Database();
     track.downloadFile();
     gameOver();
     document.getElementsByTagName('body')[0].className = state;
     modalOverlay.className = state;
 
     if (state === 'won') {
-      modalMessage.innerHTML = '<h2>You cracked the code!</h2> <p>Great! You are awesome! Try another round...</p> <button class="large" id="hideModal">OK</button> <button id="restartGame" class="large primary">Restart</button>';
+      modalMessage.innerHTML = '<h1>You cracked the code!</h1> <p>Great! You are awesome! Try another round...</p> <button class="large" id="hideModal">OK</button> <button id="restartGame" class="large primary">Restart</button>';
       document.getElementById('restartGame').onclick = newGame;
       document.getElementById('hideModal').onclick = hideModal;
     } else
-      modalMessage.innerHTML = '<h2>You failed...</h2> <p>What a shame... Look on the bright side - you weren\'t even close.</p> <button class="large" id="hideModal">OK</button> <button id="restartGame" class="large primary">Restart</button>';
+      modalMessage.innerHTML = '<h1>You failed...</h1> <p>What a shame... Look on the bright side - you weren\'t even close.</p> <button class="large" id="hideModal">OK</button> <button id="restartGame" class="large primary">Restart</button>';
     document.getElementById('restartGame').onclick = newGame;
     document.getElementById('hideModal').onclick = hideModal;
   }
 
   gameSetup(); // Run the game
-
-
-
 
 }());
 
