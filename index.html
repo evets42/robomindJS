@@ -30,7 +30,9 @@
     <header>
       <img src="js-mastermind/img/robomind_logo.svg" style="width:50px;height:50px;">
       <h1>RoboMind</h1>
-      <button id="newGame" class="green">Restart</button>
+      <div id="restart">
+        <button id="newGame" class="blue">Restart</button>
+      </div>
     </header>
 
     <div class="game-container">
@@ -192,7 +194,7 @@
         <div class="container">
           <form>
             <label for="feedback">Your thoughts?</label>
-            <textarea id="inputfield" rows="5" placeholder="Please describe your strategy for this move..."></textarea>
+            <textarea id="inputfield" rows="5" placeholder="Please describe your strategy for this move ... at least 10 letters :)"></textarea>
             <button id="submitFeedback" class="">Submit Feedback</button>
           </form>
         </div>
@@ -221,26 +223,28 @@
     </div>
 
 
+
   </div>
 
-  <div id="modalOverlay">
-    <div id="modalMessage">
-      <div class="code row">
-        <div class="secret socket">?</div>
-        <div class="secret socket">?</div>
-        <div class="secret socket">?</div>
-        <div class="secret socket">?</div>
-      </div>
-      <button class="large">OK</button>
-      <button class="large primary">Restart</button>
-
+  <div id="startOverlay">
+    <div id="enterName">
+      <img src="js-mastermind/img/robomind_logo.svg" style="width:50px;height:50px;">
+      <h2>Welcome, fellow Codecracker</h2>
+      <p><strong>I need your help</strong></p>
+      <p>Before you can help me to crack some codes, I need to know your name :)</p>
+      <input type ="text" id="nameInput" rows="1" placeholder="Your Roboname123.."></input>
+      <button id="submitName">Enter</button>
+      <p>(choose something individual - 3 letters minimum)</p>
     </div>
   </div>
 
 
-  <script type="module">
-
-  </script>
+  <div id="modalOverlay">
+    <div id="modalMessage">
+      <button class="large">OK</button>
+      <button class="large primary">Restart</button>
+    </div>
+  </div>
   <script type="module" src="js-mastermind/js/main.js"></script>
 </body>
 
