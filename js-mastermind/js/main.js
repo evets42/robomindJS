@@ -68,7 +68,7 @@ import Tracker from "./tracking.js"
     document.getElementById('close-info').onclick = hideInfo;
     infoOverlay.className = '';
     track.gameId++;
-    console.log(`Code: ${code}`)
+    //console.log(`Code: ${code}`)
   }
 
   function showInfo() {
@@ -295,11 +295,11 @@ import Tracker from "./tracking.js"
     modalOverlay.className = state;
 
     if (state === 'won') {
-      modalMessage.innerHTML = '<h1>You cracked the code!</h1> <p>Great! You are awesome! Try another round...</p> <button class="large" id="hideModal">OK</button> <button id="restartGame" class="large primary">Restart</button>';
+      modalMessage.innerHTML = '<h1 style="color:white;">You cracked the code!</h1> <p style="color:white;">Great! You are awesome! Try another round...</p> <button class="large" id="hideModal">OK</button> <button id="restartGame" class="large primary">Restart</button>';
       document.getElementById('restartGame').onclick = newGame;
       document.getElementById('hideModal').onclick = hideModal;
     } else
-      modalMessage.innerHTML = '<h1>You failed...</h1> <p>What a shame... Look on the bright side - you weren\'t even close.</p> <button class="large" id="hideModal">OK</button> <button id="restartGame" class="large primary">Restart</button>';
+      modalMessage.innerHTML = '<h1 style="color:white;">You failed...</h1> <p style="color:white;">What a shame... Look on the bright side - you weren\'t even close.</p> <button class="large" id="hideModal">OK</button> <button id="restartGame" class="large primary">Restart</button>';
     document.getElementById('restartGame').onclick = newGame;
     document.getElementById('hideModal').onclick = hideModal;
   }
