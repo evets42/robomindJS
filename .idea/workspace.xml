@@ -20,7 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="296c2370-720e-4070-974d-a8ad64b14d9c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Mastermind JS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Mastermind JS.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +100,7 @@
       <workItem from="1642538653412" duration="1607000" />
       <workItem from="1644488694009" duration="62919000" />
       <workItem from="1645211547116" duration="2649000" />
-      <workItem from="1645545744419" duration="23519000" />
+      <workItem from="1645545744419" duration="25444000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1645703946256</created>

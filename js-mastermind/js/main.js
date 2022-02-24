@@ -47,6 +47,7 @@ import Tracker from "./tracking.js"
     track.gameId++;
     console.log("gameId in main.js: "+track.gameId);
   }
+  console.log("excuse me ist das neu")
 
   function gameSetup() {
     generateSecretCode(1, 7);
