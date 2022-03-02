@@ -1,4 +1,4 @@
-
+//https://medium.com/jeremy-gottfrieds-tech-blog/javascript-tutorial-record-audio-and-encode-it-to-mp3-2eedcd466e78
 import Tracker from "./tracking.js"
 
 (function () {
@@ -291,7 +291,7 @@ import Tracker from "./tracking.js"
   function gameState(state) {
     track.write2File();
     track.write2Database();
-    track.downloadFile();
+    //track.downloadFile();
     gameOver();
     document.getElementsByTagName('body')[0].className = state;
     modalOverlay.className = state;
