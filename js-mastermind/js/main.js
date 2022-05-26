@@ -1,13 +1,24 @@
 //https://medium.com/jeremy-gottfrieds-tech-blog/javascript-tutorial-record-audio-and-encode-it-to-mp3-2eedcd466e78
-import Tracker from "./tracking.js"
+import {Tracking as Tracker} from "./tracking.js"
+import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} from "./artihuman.js"
 
-(function () {
   'use strict';
 
 
-  let code = [], // Color sequence the player needs to guess
-    guess = [], // Color sequence of player's guesses
+  let code = [] // Color sequence the player needs to guess
+  let guess = [], // Color sequence of player's guesses
     hint = [],
+    slots = null,
+    hintStorage = [
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0],
+    ],
     options = document.getElementsByClassName('option'),
     restart = document.getElementById('restart'),
     inputRows = document.getElementsByClassName('guess'),
@@ -18,57 +29,82 @@ import Tracker from "./tracking.js"
     infoOverlay = document.getElementById('infoOverlay'),
     startOverlay = document.getElementById('startOverlay'),
     instructions = document.getElementById('instructions'),
+    artihuman_button = document.getElementById('artihuman'),
+
+
 
     rowIncrement = 1,
-    hintIncrement = 1,
-    pegs = {
+    hintIncrement = 1;
+    export const pegs = {
       1: 'green',
       2: 'purple',
       3: 'red',
       4: 'yellow',
       5: 'blue',
       6: 'brown'
-    },
-    startTime = null,
+    };
+  let startTime = null,
     endTime = null;
   let track = new Tracker();
 
   startOverlay.className = 'show';
-  //let Recorder = new Rec;
-  //track.gameId = 0;
-  //Simulate name entering overlay
-  //track.playerName = 'Steve';
+
   async function readUserData() {
     track.userId = await track.readUserId();
-    console.log("userId in main.js: "+track.userId);
+    //console.log("userId in main.js: "+track.userId);
     track.gameId = await track.readLastGameId(track.userId);
 
     //new increase new gameId by 1
     track.gameId++;
-    console.log("gameId in main.js: "+track.gameId);
+    //("gameId in main.js: "+track.gameId);
   }
-  console.log("excuse me ist das neu")
 
   function gameSetup() {
     generateSecretCode(1, 7);
     startTime = performance.now();
     // Add event listener to every code option button
-    for (var i = 0; i < options.length; i++)
+    for (let i = 0; i < options.length; i++) {
       options[i].addEventListener('click', insertGuess, false);
+    }
 
+    let nameInput = document.getElementById('nameInput');
+    nameInput.addEventListener("keyup", function(event) {
+      if (event.key === "Enter") {
+        document.getElementById('submitName').click();
+      }
+    });
     document.getElementById('newGame').onclick = newGame;
     document.getElementById('delete').onclick = deleteLast;
     document.getElementById('submit').onclick = submitGuess;
     document.getElementById('submitName').onclick = submitName;
-    document.getElementById("submit").disabled = true;
+    document.getElementById('submit').disabled = true;
     document.getElementById('submitFeedback').onclick = submitFeedback;
     document.getElementById('submitFeedback').disabled = true;
 //   document.getElementById('inputfield').disabled = true;
     document.getElementById('info').onclick = showInfo;
     document.getElementById('close-info').onclick = hideInfo;
-    infoOverlay.className = '';
+
+
+
+    artihuman_button.onclick = askArtihuman;
+
+    //infoOverlay.className = '';
     track.gameId++;
-    //console.log(`Code: ${code}`)
+    console.log(`Code: ${code}`)
+
+  }
+  function askArtihuman() {
+    analyzeInputRows(inputRows, hintStorage);
+    guess = getArtihumanGuess();
+    //console.log("Artihuman guess:", guess)
+    setArtihumanSlots(guess);
+
+
+
+
+    document.getElementById("submit").disabled = false;
+    document.getElementById('inputfield').value = 'I asked ArtiHuman to make a move';
+  artihuman_button.disabled = true;
   }
 
   function showInfo() {
@@ -79,12 +115,20 @@ import Tracker from "./tracking.js"
     infoOverlay.className = '';
   }
 
+  export function getCurrentSlots() {
+    return inputRows[inputRows.length - rowIncrement].getElementsByClassName('socket');
+  }
+
   function insertGuess() {
-    var self = this;
-    var slots = inputRows[inputRows.length - rowIncrement].getElementsByClassName('socket');
+    let self = this;
+    slots = getCurrentSlots();
     if (guess.length < 4) {
       slots[guess.length].className = slots[guess.length].className + ' peg ' + self.id; // Insert node into page
       guess.push(+(self.value));
+      //console.log(inputRows[7].getElementsByClassName('socket')[0].className)
+      //slots[0].className = 'socket peg red'
+      //console.log(`slots: ${slots[0].className}`)
+      //console.log(`guess: ${guess}`)
     }
 
     if (guess.length == 4) {
@@ -99,7 +143,7 @@ import Tracker from "./tracking.js"
     var codeCopy = code.slice(0);
 
     // First check if there are any pegs that are the right color in the right place
-    for (var i = 0; i < code.length; i++) {
+    for (let i = 0; i < code.length; i++) {
       if (guess[i] === code[i]) {
         insertPeg('hit');
         codeCopy[i] = 0;
@@ -127,8 +171,14 @@ import Tracker from "./tracking.js"
   }
 
   function insertPeg(type) {
-    var sockets = hintContainer[hintContainer.length - hintIncrement].getElementsByClassName('js-hint-socket');
+
+    let sockets = hintContainer[hintContainer.length - hintIncrement].getElementsByClassName('js-hint-socket');
+
     sockets[0].className = 'socket ' + type;
+
+    hintStorage[hintContainer.length - hintIncrement].pop();
+    hintStorage[hintContainer.length - hintIncrement].unshift(type);
+    console.log(`hintStorage from main.js: ${JSON.stringify(hintStorage)}`);
   }
 
   function deleteLast() {
@@ -190,6 +240,9 @@ import Tracker from "./tracking.js"
         document.getElementById('inputfield').style.borderColor = myArray[(Math.random() * myArray.length) | 0]
 
       }
+
+      artihuman_button.disabled = false;
+
     }
   }
 
@@ -201,7 +254,8 @@ import Tracker from "./tracking.js"
     rowIncrement = 1;  // Set the first row of sockets as available for guesses
     hintIncrement = 1; // Set the first row of sockets as available for hints
     hideModal();
-    gameSetup();           // Prepare the game
+    resetArtihuman();
+    gameSetup();// Prepare the game
   }
 
   function hideModal() {
@@ -210,12 +264,10 @@ import Tracker from "./tracking.js"
   }
 
   function showRestart() {
-    console.log("showRestart");
     restart.className = '';
   }
 
   function hideRestart() {
-    console.log("hideRestart")
     restart.className = 'hidden';
   }
 
@@ -225,6 +277,9 @@ import Tracker from "./tracking.js"
       track.playerName = name
       hideStartOverlay();
       readUserData();
+    }
+    if (track.playerName != 'Steve') {
+      artihuman_button.style.visibility="hidden";
     }
   }
 
@@ -246,6 +301,18 @@ import Tracker from "./tracking.js"
         socketCollection[j].className = 'js-hint-socket socket';
       }
     }
+
+    // Clear hintStorage
+    hintStorage = [
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0],
+    ]
 
     // Reset secret code sockets
     for (var i = 0; i < secretSockets.length; i++) {
@@ -306,8 +373,27 @@ import Tracker from "./tracking.js"
     document.getElementById('hideModal').onclick = hideModal;
   }
 
+  function getGuess() {
+    return guess
+  }
+
+  function getInputRows() {
+    return inputRows;
+  }
+
+  function getHintStorage() {
+    return hintStorage;
+  }
+
+  function getRowIncrement() {
+    return rowIncrement;
+  }
+
   gameSetup(); // Run the game
 
-}());
+  export {getGuess, getInputRows, getHintStorage, getRowIncrement};
+
+
+
 
 

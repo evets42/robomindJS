@@ -528,9 +528,13 @@ button.primary {
   -moz-transform-origin: center;
 }
 
-#delete {
+#delete, #artihuman {
   font-size: 21px;
   background-color: #c7bf8d;
+}
+
+#artihuman:disabled, #artihuman[disabled] {
+  opacity: 0.4;
 }
 
 #info {
