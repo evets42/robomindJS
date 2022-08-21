@@ -10,6 +10,11 @@
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
       </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
     </expand>
     <select>
       <path>
@@ -21,9 +26,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="296c2370-720e-4070-974d-a8ad64b14d9c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js-mastermind/js/artihuman.js" beforeDir="false" afterPath="$PROJECT_DIR$/js-mastermind/js/artihuman.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js-mastermind/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js-mastermind/js/main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -128,7 +130,7 @@
       <workItem from="1656759870490" duration="25034000" />
       <workItem from="1657395088091" duration="30138000" />
       <workItem from="1660490326507" duration="5704000" />
-      <workItem from="1661079803319" duration="1536000" />
+      <workItem from="1661079803319" duration="2186000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1645703946256</created>
@@ -144,7 +146,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645705521768</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added Artihuman">
+      <created>1661082211726</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1661082211726</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,7 +175,8 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="10000" />
     <MESSAGE value="update" />
     <MESSAGE value="changed gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed gitignore" />
+    <MESSAGE value="Added Artihuman" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Artihuman" />
   </component>
   <component name="WindowStateProjectService">
     <state x="151" y="0" width="1096" height="708" key="SettingsEditor" timestamp="1651057891854">
