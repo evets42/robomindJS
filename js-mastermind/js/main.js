@@ -139,8 +139,8 @@ import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} 
   }
 
   function compare() {
-    var isMatch = true;
-    var codeCopy = code.slice(0);
+    let isMatch = true;
+    let codeCopy = code.slice(0);
 
     // First check if there are any pegs that are the right color in the right place
     for (let i = 0; i < code.length; i++) {
@@ -154,7 +154,7 @@ import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} 
     }
 
     // Then check if there are any pegs that are the right color but NOT in the right place
-    for (var j = 0; j < code.length; j++) {
+    for (let j = 0; j < code.length; j++) {
       if (codeCopy.indexOf(guess[j]) !== -1) {
         insertPeg('almost');
         hint.push('w');
@@ -333,11 +333,13 @@ import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} 
 
   // Creates a color sequence that the player needs to guess
   function generateSecretCode(min, max) {
-    for (var i = 0; i < 4; i++)
+    for (var i = 0; i < 4; i++) {
       code[i] = Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    //code = [1,1,4,6];
     track.correctCode = code.slice(0,4);
   }
-
 
   // Once the player runs out of guesses or crack the code - the sequence is revealed
   function revealCode() {

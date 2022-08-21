@@ -10,30 +10,21 @@
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
       </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
     </expand>
     <select>
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:origin/with-database" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="296c2370-720e-4070-974d-a8ad64b14d9c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js-mastermind/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/js-mastermind/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js-mastermind/js/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/js-mastermind/js/database.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js-mastermind/js/artihuman.js" beforeDir="false" afterPath="$PROJECT_DIR$/js-mastermind/js/artihuman.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js-mastermind/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js-mastermind/js/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js-mastermind/js/tracking.js" beforeDir="false" afterPath="$PROJECT_DIR$/js-mastermind/js/tracking.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,13 +74,15 @@
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2020.2.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -129,6 +122,13 @@
       <workItem from="1650986143060" duration="57615000" />
       <workItem from="1652519683410" duration="8307000" />
       <workItem from="1652647127992" duration="12629000" />
+      <workItem from="1653571896084" duration="5809000" />
+      <workItem from="1654805410510" duration="18938000" />
+      <workItem from="1656158546988" duration="15521000" />
+      <workItem from="1656759870490" duration="25034000" />
+      <workItem from="1657395088091" duration="30138000" />
+      <workItem from="1660490326507" duration="5704000" />
+      <workItem from="1661079803319" duration="1536000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1645703946256</created>
@@ -155,19 +155,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="origin/with-database" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -181,54 +169,25 @@
     <option name="LAST_COMMIT_MESSAGE" value="changed gitignore" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="400" y="241" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1645704389708">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="400" y="241" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645704389708" />
-    <state x="105" y="0" key="CommitChangelistDialog2" timestamp="1645705520238">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="105" y="0" key="CommitChangelistDialog2/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645705520238" />
-    <state x="94" y="94" width="1093" height="533" key="DiffContextDialog" timestamp="1645711456606">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="94" y="94" width="1093" height="533" key="DiffContextDialog/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645711456606" />
-    <state x="451" y="102" key="FileChooserDialogImpl" timestamp="1645711319962">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="451" y="102" key="FileChooserDialogImpl/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645711319962" />
     <state x="151" y="0" width="1096" height="708" key="SettingsEditor" timestamp="1651057891854">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="151" y="0" width="1096" height="708" key="SettingsEditor/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645711440877" />
     <state x="151" y="0" key="SettingsEditor/0.0.1280.720@0.0.1280.720" timestamp="1651057891854" />
-    <state x="435" y="94" key="Vcs.Push.Dialog.v2" timestamp="1645705543496">
+    <state x="460" y="275" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1660297440603">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="435" y="94" key="Vcs.Push.Dialog.v2/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645705543496" />
-    <state x="243" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1644864736869">
+    <state x="460" y="275" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.720@0.0.1280.720" timestamp="1660297440603" />
+    <state x="298" y="161" key="run.anything.popup" timestamp="1656760699554">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="243" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1644864736869" />
-    <state x="460" y="275" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1652616643870">
+    <state x="298" y="161" key="run.anything.popup/0.0.1280.720@0.0.1280.720" timestamp="1656760699554" />
+    <state x="434" y="220" key="scopes" timestamp="1660298941355">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="-1230" y="413" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.720/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1645038309477" />
-    <state x="460" y="275" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1648752099119" />
-    <state x="460" y="275" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.720@0.0.1280.720" timestamp="1652616643870" />
-    <state x="496" y="63" width="582" height="534" key="find.popup" timestamp="1645554276719">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="496" y="63" width="582" height="534" key="find.popup/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645554276719" />
-    <state x="298" y="161" key="run.anything.popup" timestamp="1648319096135">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="298" y="161" key="run.anything.popup/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645550098237" />
-    <state x="298" y="161" key="run.anything.popup/0.0.1280.720@0.0.1280.720" timestamp="1648319096135" />
+    <state x="434" y="220" key="scopes/0.0.1280.720@0.0.1280.720" timestamp="1660298941355" />
     <state x="303" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1651752765062">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645651910904" />
     <state x="303" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1280.720@0.0.1280.720" timestamp="1651752765062" />
   </component>
 </project>
