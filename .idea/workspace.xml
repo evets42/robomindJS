@@ -16,10 +16,18 @@
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="296c2370-720e-4070-974d-a8ad64b14d9c" name="Default Changelist" comment="" />
+    <list default="true" id="296c2370-720e-4070-974d-a8ad64b14d9c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/js-mastermind/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js-mastermind/js/main.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,8 +72,23 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.34816462" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.folding" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2020.2.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -90,7 +113,24 @@
       <workItem from="1644488694009" duration="62919000" />
       <workItem from="1645211547116" duration="2649000" />
       <workItem from="1645545744419" duration="25444000" />
-      <workItem from="1646213228529" duration="626000" />
+      <workItem from="1646213228529" duration="1922000" />
+      <workItem from="1647526093409" duration="50655000" />
+      <workItem from="1648727578368" duration="10226000" />
+      <workItem from="1648803447461" duration="193000" />
+      <workItem from="1648803668268" duration="42000" />
+      <workItem from="1648803734890" duration="13189000" />
+      <workItem from="1649494213390" duration="1263000" />
+      <workItem from="1650985001339" duration="12000" />
+      <workItem from="1650986143060" duration="57615000" />
+      <workItem from="1652519683410" duration="8307000" />
+      <workItem from="1652647127992" duration="12629000" />
+      <workItem from="1653571896084" duration="5809000" />
+      <workItem from="1654805410510" duration="18938000" />
+      <workItem from="1656158546988" duration="15521000" />
+      <workItem from="1656759870490" duration="25034000" />
+      <workItem from="1657395088091" duration="30138000" />
+      <workItem from="1660490326507" duration="5704000" />
+      <workItem from="1661079803319" duration="2186000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1645703946256</created>
@@ -106,7 +146,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645705521768</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added Artihuman">
+      <created>1661082211726</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1661082211726</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -125,57 +172,32 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="MAXIMUM_HISTORY_ROWS" value="10000" />
     <MESSAGE value="update" />
     <MESSAGE value="changed gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed gitignore" />
+    <MESSAGE value="Added Artihuman" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Artihuman" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="400" y="241" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1645704389708">
+    <state x="151" y="0" width="1096" height="708" key="SettingsEditor" timestamp="1651057891854">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="400" y="241" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645704389708" />
-    <state x="105" y="0" key="CommitChangelistDialog2" timestamp="1645705520238">
+    <state x="151" y="0" key="SettingsEditor/0.0.1280.720@0.0.1280.720" timestamp="1651057891854" />
+    <state x="460" y="275" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1660297440603">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="105" y="0" key="CommitChangelistDialog2/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645705520238" />
-    <state x="94" y="94" width="1093" height="533" key="DiffContextDialog" timestamp="1645711456606">
+    <state x="460" y="275" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.720@0.0.1280.720" timestamp="1660297440603" />
+    <state x="298" y="161" key="run.anything.popup" timestamp="1656760699554">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="94" y="94" width="1093" height="533" key="DiffContextDialog/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645711456606" />
-    <state x="451" y="102" key="FileChooserDialogImpl" timestamp="1645711319962">
+    <state x="298" y="161" key="run.anything.popup/0.0.1280.720@0.0.1280.720" timestamp="1656760699554" />
+    <state x="434" y="220" key="scopes" timestamp="1660298941355">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="451" y="102" key="FileChooserDialogImpl/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645711319962" />
-    <state x="151" y="0" width="1096" height="708" key="SettingsEditor" timestamp="1645711440877">
+    <state x="434" y="220" key="scopes/0.0.1280.720@0.0.1280.720" timestamp="1660298941355" />
+    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1651752765062">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="151" y="0" width="1096" height="708" key="SettingsEditor/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645711440877" />
-    <state x="435" y="94" key="Vcs.Push.Dialog.v2" timestamp="1645705543496">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="435" y="94" key="Vcs.Push.Dialog.v2/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645705543496" />
-    <state x="435" y="94" key="Vcs.Push.Dialog.v2/0.0.1280.720@0.0.1280.720" timestamp="1642170396105" />
-    <state x="243" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1644864736869">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="243" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1644864736869" />
-    <state x="-1230" y="413" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1645038309477">
-      <screen x="-1920" y="0" width="1920" height="1080" />
-    </state>
-    <state x="-1230" y="413" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.720/-1920.0.1920.1080@-1920.0.1920.1080" timestamp="1645038309477" />
-    <state x="460" y="275" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1644864222773" />
-    <state x="496" y="63" width="582" height="534" key="find.popup" timestamp="1645554276719">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="496" y="63" width="582" height="534" key="find.popup/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645554276719" />
-    <state x="298" y="161" key="run.anything.popup" timestamp="1645550098237">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="298" y="161" key="run.anything.popup/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645550098237" />
-    <state x="298" y="161" key="run.anything.popup/0.0.1280.720@0.0.1280.720" timestamp="1642015597086" />
-    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1645651910904">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1645651910904" />
+    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1280.720@0.0.1280.720" timestamp="1651752765062" />
   </component>
 </project>
