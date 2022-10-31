@@ -1,12 +1,26 @@
 //https://medium.com/jeremy-gottfrieds-tech-blog/javascript-tutorial-record-audio-and-encode-it-to-mp3-2eedcd466e78
 import {Tracking as Tracker} from "./tracking.js"
 import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} from "./artihuman.js"
+import {AutoPlayer as AutoPlayer} from "./autoPlayer.js";
+
 
   'use strict';
+
+  function retrieveArtiHumanOptions() {
+    let inputElements=document.getElementsByName("test")
+    let artiHumanOptions = [];
+    for(let i=0;i < inputElements.length;++i) {
+      if(inputElements[i].checked) {
+        artiHumanOptions.push(inputElements[i].value);
+      }
+    }
+    return artiHumanOptions;
+  }
 
 
   let code = [] // Color sequence the player needs to guess
   let guess = [], // Color sequence of player's guesses
+    gameWonOrLost = null,
     hint = [],
     slots = null,
     hintStorage = [
@@ -30,6 +44,9 @@ import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} 
     startOverlay = document.getElementById('startOverlay'),
     instructions = document.getElementById('instructions'),
     artihuman_button = document.getElementById('artihuman'),
+    autoplay_input = document.getElementById('autoplayinput'),
+    autoplay_button = document.getElementById('autoPlay'),
+    artihuman_select = document.getElementById('artihumanselect'),
 
 
 
@@ -59,7 +76,7 @@ import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} 
     //("gameId in main.js: "+track.gameId);
   }
 
-  function gameSetup() {
+  async function gameSetup() {
     generateSecretCode(1, 7);
     startTime = performance.now();
     // Add event listener to every code option button
@@ -80,31 +97,39 @@ import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} 
     document.getElementById('submit').disabled = true;
     document.getElementById('submitFeedback').onclick = submitFeedback;
     document.getElementById('submitFeedback').disabled = true;
-//   document.getElementById('inputfield').disabled = true;
     document.getElementById('info').onclick = showInfo;
     document.getElementById('close-info').onclick = hideInfo;
+    document.getElementById('overSelect').onclick = showCheckboxes;
+    document.getElementById('artihuman').onclick = askArtihuman;
+    document.getElementById('autoPlay').onclick = autoPlay;
 
 
-
-    artihuman_button.onclick = askArtihuman;
+    //artihuman_button.onclick = askArtihuman;
+    //autoplay_button.onclick = autoPlay;
 
     //infoOverlay.className = '';
     track.gameId++;
     console.log(`Code: ${code}`)
 
   }
-  function askArtihuman() {
+
+  async function askArtihuman() {
+    //ev.preventDefault();
     analyzeInputRows(inputRows, hintStorage);
-    guess = getArtihumanGuess();
+    guess = await getArtihumanGuess();
     //console.log("Artihuman guess:", guess)
-    setArtihumanSlots(guess);
-
-
-
+    await setArtihumanSlots(guess);
 
     document.getElementById("submit").disabled = false;
     document.getElementById('inputfield').value = 'I asked ArtiHuman to make a move';
-  artihuman_button.disabled = true;
+    artihuman_button.disabled = true;
+  }
+
+  async function autoPlay() {
+    //ev.preventDefault();
+    //artihuman_button.click()
+    let autoPlayer = await new AutoPlayer(document.getElementById('autoplayinputfield').value);
+    await autoPlayer.play();
   }
 
   function showInfo() {
@@ -115,6 +140,15 @@ import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} 
     infoOverlay.className = '';
   }
 
+  function showCheckboxes() {
+    let checkboxes =  document.getElementById("checkboxes");
+    if(checkboxes.style.display === "none"){
+      checkboxes.style.display="block";
+    } else {
+      checkboxes.style.display="none";
+    }
+}
+
   export function getCurrentSlots() {
     return inputRows[inputRows.length - rowIncrement].getElementsByClassName('socket');
   }
@@ -123,6 +157,7 @@ import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} 
     let self = this;
     slots = getCurrentSlots();
     if (guess.length < 4) {
+      //console.log(`Are slots even defined? slots => ${slots}, guess => ${guess}`)
       slots[guess.length].className = slots[guess.length].className + ' peg ' + self.id; // Insert node into page
       guess.push(+(self.value));
       //console.log(inputRows[7].getElementsByClassName('socket')[0].className)
@@ -178,12 +213,12 @@ import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} 
 
     hintStorage[hintContainer.length - hintIncrement].pop();
     hintStorage[hintContainer.length - hintIncrement].unshift(type);
-    console.log(`hintStorage from main.js: ${JSON.stringify(hintStorage)}`);
+    //console.log(`hintStorage from main.js: ${JSON.stringify(hintStorage)}`);
   }
 
   function deleteLast() {
     if (guess.length !== 0) {
-      var slots = inputRows[inputRows.length - rowIncrement].getElementsByClassName('socket');
+      let slots = inputRows[inputRows.length - rowIncrement].getElementsByClassName('socket');
       slots[guess.length - 1].className = 'socket'; // Insert node into page
       guess.pop();
       document.getElementById("submit").disabled = true;
@@ -198,7 +233,7 @@ import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} 
     document.getElementById('inputfield').value('');
   }
 
-  function submitGuess(ev) {
+  function submitGuess() {
 
     let feedbackTemp = document.getElementById('inputfield').value.slice(0);
 
@@ -218,8 +253,6 @@ import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} 
         track.addTurnTime(rowIncrement, startTime, endTime);
         startTime = performance.now();
 
-        ev.preventDefault();
-
         track.addFeedback(rowIncrement, feedbackTemp);
 
         document.getElementById('inputfield').value = '';
@@ -229,10 +262,13 @@ import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} 
         if (compare()) {
           track.won = true;
           gameState('won');
+          gameWonOrLost = 'won';
+          console.log("gameWonOrLost compare() =>", gameWonOrLost);
         } else rowIncrement += 1;
 
         if (rowIncrement === inputRows.length + 1 && !compare()) {
           track.won = false;
+          gameWonOrLost = 'lost';
           gameState('lost');
         }
       } else {
@@ -246,24 +282,25 @@ import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} 
     }
   }
 
-  function newGame() {
+  async function newGame() {
     //saveGameTracker
     guess = [];        // Reset guess array
     hint = [];
-    clearBoard();
+    await clearBoard();
+
     rowIncrement = 1;  // Set the first row of sockets as available for guesses
     hintIncrement = 1; // Set the first row of sockets as available for hints
-    hideModal();
-    resetArtihuman();
-    gameSetup();// Prepare the game
+    await hideModal();
+    await resetArtihuman();
+    await gameSetup();// Prepare the game
   }
 
-  function hideModal() {
-    modalOverlay.className = 'show';
-    showRestart();
+  async function hideModal() {
+      modalOverlay.className = 'show';
+      await showRestart();
   }
 
-  function showRestart() {
+  async function showRestart() {
     restart.className = '';
   }
 
@@ -281,48 +318,56 @@ import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} 
     let artiHumanPlayersList = ['Steve', 'OliverBot']
 
     if(!artiHumanPlayersList.includes(track.playerName)) {
-      artihuman_button.style.visibility="hidden";
+      artihuman_button.style.display="none";
+      autoplay_input.style.display="none";
+      artihuman_select.style.display="none";
     }
   }
 
-  function clearBoard() {
-    // Clear the guess sockets
-    for (var i = 0; i < inputRows.length; i++) {
-      inputRows[i].innerHTML = '';
-      for (var j = 0; j < 4; j++) {
-        var socket = document.createElement('div');
-        socket.className = 'socket';
-        inputRows[i].appendChild(socket);
+  async function clearBoard() {
+      // Clear the guess sockets
+      for (let i = 0; i < inputRows.length; i++) {
+        inputRows[i].innerHTML = '';
+        for (let j = 0; j < 4; j++) {
+          let socket = document.createElement('div');
+          socket.className = 'socket';
+          inputRows[i].appendChild(socket);
+        }
       }
-    }
 
-    // Clear the hint sockets
-    for (var i = 0; i < hintContainer.length; i++) {
-      var socketCollection = hintContainer[i].getElementsByClassName('socket');
-      for (var j = 0; j < 4; j++) {
-        socketCollection[j].className = 'js-hint-socket socket';
+      // Clear the hint sockets
+      for (let i = 0; i < hintContainer.length; i++) {
+        let socketCollection = hintContainer[i].getElementsByClassName('socket');
+        for (let j = 0; j < 4; j++) {
+          socketCollection[j].className = 'js-hint-socket socket';
+        }
       }
-    }
 
-    // Clear hintStorage
-    hintStorage = [
-      [0,0,0,0],
-      [0,0,0,0],
-      [0,0,0,0],
-      [0,0,0,0],
-      [0,0,0,0],
-      [0,0,0,0],
-      [0,0,0,0],
-      [0,0,0,0],
-    ]
+      // Clear hintStorage
+      hintStorage = [
+        [0,0,0,0],
+        [0,0,0,0],
+        [0,0,0,0],
+        [0,0,0,0],
+        [0,0,0,0],
+        [0,0,0,0],
+        [0,0,0,0],
+        [0,0,0,0],
+      ]
 
-    // Reset secret code sockets
-    for (var i = 0; i < secretSockets.length; i++) {
-      secretSockets[i].className = 'secret socket';
-      secretSockets[i].innerHTML = '?';
-    }
+      // Reset secret code sockets
+      for (let i = 0; i < secretSockets.length; i++) {
+        secretSockets[i].className = 'secret socket';
+        secretSockets[i].innerHTML = '?';
+      }
 
-    document.getElementsByTagName('body')[0].className = ''; // Reset background
+      // Reset background
+      document.getElementsByTagName('body')[0].className = '';
+
+      // Reset gameWonOrLost
+      console.log("gameWonOrLost before =>", gameWonOrLost);
+      gameWonOrLost = null;
+      console.log("gameWonOrLost before =>", gameWonOrLost);
   }
 
   function hideStartOverlay(){
@@ -335,17 +380,17 @@ import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} 
 
   // Creates a color sequence that the player needs to guess
   function generateSecretCode(min, max) {
-    for (var i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
       code[i] = Math.floor(Math.random() * (max - min)) + min;
     }
 
-    //code = [1,1,4,6];
+    code = [2,2,2,1];
     track.correctCode = code.slice(0,4);
   }
 
   // Once the player runs out of guesses or crack the code - the sequence is revealed
   function revealCode() {
-    for (var i = 0; i < secretSockets.length; i++) {
+    for (let i = 0; i < secretSockets.length; i++) {
       secretSockets[i].className += ' ' + pegs[code[i]];
       secretSockets[i].innerHTML = ''; // Remove "?" from the socket
     }
@@ -353,7 +398,7 @@ import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} 
 
   function gameOver() {
     // Disable color options
-    for (var i = 0; i < options.length; i++)
+    for (let i = 0; i < options.length; i++)
       options[i].removeEventListener('click', insertGuess, false);
 
     revealCode();
@@ -393,9 +438,19 @@ import {analyzeInputRows, getArtihumanGuess, resetArtihuman, setArtihumanSlots} 
     return rowIncrement;
   }
 
+  function getArtiHumanOptions() {
+    return retrieveArtiHumanOptions();
+  }
+
+  function getGameWonOrLost() {
+    return gameWonOrLost;
+  }
+
   gameSetup(); // Run the game
 
-  export {getGuess, getInputRows, getHintStorage, getRowIncrement};
+  export {getGuess, getInputRows, getHintStorage, getRowIncrement,
+          getArtiHumanOptions, getGameWonOrLost, askArtihuman,
+          submitGuess, newGame};
 
 
 

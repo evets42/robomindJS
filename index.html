@@ -12,7 +12,6 @@
   <title>JS Mastermind</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, user-scalable=no">
-
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,800,800italic' rel='stylesheet'
     type='text/css'>
   <link rel="stylesheet" href="js-mastermind/css/normalize.css">
@@ -180,23 +179,57 @@
           <button value="1" id="green" class="option green"></button>
           <button value="2" id="purple" class="option purple"></button>
           <button value="3" id="red" class="option red"></button>
-          <button disabled id="submit" class="">Submit</button>
+          <button disabled id="submit" type="button" class="extraButton">Submit</button>
           <p></p>
           <button value="4" id="yellow" class="option yellow"></button>
           <button value="5" id="blue" class="option blue"></button>
           <button value="6" id="brown" class="option brown"></button>
-          <button id="delete" class="">&#8634;</button>
-          <button id="artihuman" class="">&#x1F916;</button>
+
+          <button id="artihuman" type="button" class="extraButton">&#x1F916;</button>
+          <button id="delete" type="button" class="extraButton">&#9003;</button>
+
+
+
+
+          <div class="multiselect" id="artihumanselect">
+            <div class="selectBox" id="selectBox">
+              <select> <option>ArtiHuman options</option></select>
+              <div class="overSelect" id="overSelect"></div>
+            </div>
+            <div id="checkboxes" style="display:none;" name="checkboxes">
+              <label for="four"><input type="checkbox" id="four" name="test" value="basiclogic"/> Basic Logic</label>
+              <label for="two"><input type="checkbox" id="two" name="test" value="playLikeHannes"/> Rule out colors</label>
+              <label for="three"><input type="checkbox" id="three" name="test" value="consistency"/> Knuth consistency</label>
+              <label for="one"><input type="checkbox" id="one" name="test" value="compareWithBbefore"/> Compare with before</label>
+
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+
+      <div id="autoplayinput" class="autoplayinput">
+        <div class="container">
+          <form id="autplayinputform">
+            <label for="autoplayinputfield">#Autoplay Games:</label>
+            <input type="number" id="autoplayinputfield" placeholder="1"></textarea>
+            <button id="autoPlay" type="button" class="extraButton">&#9654;</button>
+          </form>
+          <div id="autoPlayResults">
+
+          </div>
         </div>
 
       </div>
 
-      <div id="textinput">
+      <div id="textinput" class="textinput">
         <div class="container">
           <form>
             <label for="inputfield">Your thoughts?</label>
             <textarea id="inputfield" rows="5" placeholder="Why did you choose this combination of pins? ... at least 10 letters :)"></textarea>
-            <button id="submitFeedback" class="">Submit Feedback</button>
+            <button id="submitFeedback" type="button" class="">Submit Feedback</button>
           </form>
         </div>
       </div>
