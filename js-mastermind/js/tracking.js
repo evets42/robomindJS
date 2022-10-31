@@ -149,6 +149,7 @@ import {getDatabase, ref, set, onValue, get, child, update, remove, orderByKey} 
         //Write last_gameId
         //console.log(`I write the last_gameId: ${this.gameId} from user: ${this.userId} to DB`)
         set(ref(db, `game_data/${this.userId}/last_gameId`), this.gameId);
+        this.clearTemp();
     }
 
     write2File() {
@@ -164,25 +165,4 @@ import {getDatabase, ref, set, onValue, get, child, update, remove, orderByKey} 
         };
         localStorage.setItem('GameData', JSON.stringify(this.gameData));
     }
-
-    downloadFile() {
-        let blob = new Blob([JSON.stringify(this.gameData, null, 2)], { type: 'application/json' });
-
-        var saveBlob = (function () {
-            var a = document.createElement("a");
-            document.body.appendChild(a);
-            a.style = "display: none";
-            return function (blob, fileName) {
-                var url = window.URL.createObjectURL(blob);
-                a.href = url;
-                a.download = fileName;
-                a.click();
-                window.URL.revokeObjectURL(url);
-            };
-        }());
-        saveBlob(blob, `${this.gameId}_gameData.json`);
-
-        this.clearTemp();
-    }
-
 }

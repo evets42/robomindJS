@@ -384,7 +384,7 @@ import {AutoPlayer as AutoPlayer} from "./autoPlayer.js";
       code[i] = Math.floor(Math.random() * (max - min)) + min;
     }
 
-    code = [2,2,2,1];
+    //code = [2,2,2,1];
     track.correctCode = code.slice(0,4);
   }
 

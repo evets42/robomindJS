@@ -26,12 +26,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="296c2370-720e-4070-974d-a8ad64b14d9c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/js-mastermind/js/autoPlayer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js-mastermind/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/js-mastermind/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js-mastermind/js/artihuman.js" beforeDir="false" afterPath="$PROJECT_DIR$/js-mastermind/js/artihuman.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js-mastermind/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js-mastermind/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js-mastermind/js/tracking.js" beforeDir="false" afterPath="$PROJECT_DIR$/js-mastermind/js/tracking.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,7 +139,7 @@
       <workItem from="1665424135024" duration="1901000" />
       <workItem from="1665521084858" duration="1076000" />
       <workItem from="1666545025784" duration="1574000" />
-      <workItem from="1667082639859" duration="618000" />
+      <workItem from="1667082639859" duration="1680000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1645703946256</created>
@@ -166,7 +162,21 @@
       <option name="project" value="LOCAL" />
       <updated>1661082211726</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Updated with functioning artihuman">
+      <created>1667250287441</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1667250287441</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Changed code generation to random">
+      <created>1667250900000</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1667250900000</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,7 +199,9 @@
     <MESSAGE value="update" />
     <MESSAGE value="changed gitignore" />
     <MESSAGE value="Added Artihuman" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Artihuman" />
+    <MESSAGE value="Updated with functioning artihuman" />
+    <MESSAGE value="Changed code generation to random" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed code generation to random" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1512" y="450" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1666876994744">
@@ -205,6 +217,10 @@
     </state>
     <state x="422" y="116" key="FileChooserDialogImpl/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1664217502903" />
     <state x="422" y="116" key="FileChooserDialogImpl/0.0.1280.720@0.0.1280.720" timestamp="1661612647824" />
+    <state x="234" y="94" key="Vcs.Push.Dialog.v2" timestamp="1667250904335">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="234" y="94" key="Vcs.Push.Dialog.v2/0.0.1280.720/-3440.0.3440.1440@0.0.1280.720" timestamp="1667250904335" />
     <state x="245" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1664731873266">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
