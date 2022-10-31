@@ -1,5 +1,6 @@
 //import {pegs} from "./main.js";
-import {getGuess, getInputRows, getHintStorage, getCurrentSlots, getRowIncrement} from "./main.js";
+import {getGuess, getInputRows, getHintStorage, getCurrentSlots, getRowIncrement, getArtiHumanOptions} from "./main.js";
+
 
 const pegs = {
     1: 'green',
@@ -19,24 +20,24 @@ const reverse_pegs = {
 }
 
 //create a memory dict for every color
-let memory = buildMemory(pegs);
+let memory = await buildMemory(pegs);
 
 let numberGameMoves = 0;
 let numberArtiMoves = 0;
 
 // Create solutionSpace with 1296 (6^4) combinations
-let solutionSpace = printAllKLength([1, 2, 3, 4, 5, 6], 4);
+let solutionSpace = await printAllKLength([1, 2, 3, 4, 5, 6], 4);
 let solutionSet = new Set(solutionSpace);
+
 //console.log(Array.from(solutionSpace[0]));
 //console.log(([1, 2, 3, 4, 5, 6]).join(''));
 
-//let inputRows = getInputRows();
+let artiHumanOptions = getArtiHumanOptions();
 
 // Todo otherwise : count hints (how many b how many w)
 
-function buildMemory(pegs) {
+async function buildMemory(pegs) {
     let temp_memory = {};
-
     for (let key in pegs) {
         temp_memory[key] = {
             isInSecret: false,    // Color is certainly in the secret
@@ -74,11 +75,13 @@ function buildMemory(pegs) {
 function printAllKLength(set, k) {
 // Javascript program to print all
 // possible strings of length k
+    return new Promise((resolve) => {
+        let n = set.length;
+        let result = [];
+        printAllKLengthRec(result, set, "", n, k);
+        resolve(result);
+    })
 
-    let n = set.length;
-    let result = [];
-    printAllKLengthRec(result, set, "", n, k);
-    return result;
 }
 
 function printAllKLengthRec(result, set, prefix, n, k) {
@@ -119,7 +122,7 @@ export function analyzeInputRows(inputRows, hintStorage) {
         let currentRow = [];
         for (let i = 0; i <= currentSlots.length; i++) {
             let counter_numberGameMoves = inputRows.length - k;
-            if (currentSlots[i] != null && currentSlots[i].className == 'socket' && !numberGameMoves_bool) {
+            if (currentSlots[i] != null && currentSlots[i].className === 'socket' && !numberGameMoves_bool) {
                 numberGameMoves = counter_numberGameMoves;
                 numberGameMoves_bool = true;
                 //console.log("numberGameMoves: ", numberGameMoves);
@@ -206,16 +209,13 @@ export function analyzeInputRows(inputRows, hintStorage) {
                         }
                     }
                 }
-
-
                 diminishSolutionSpace(currentRow, b, w);
-
-
             }
         }
     }
     //console.log(JSON.stringify(memory, null, 2));
-    console.log('memory.amountColor: ', JSON.stringify(memory.amountColor, null, 2));
+    //console.log('memory.amountColor: ', JSON.stringify(memory.amountColor, null, 2));
+    //console.log('memory.pegs')
     //console.log(JSON.stringify(memory.amountColor, null, 2));
 }
 
@@ -245,6 +245,7 @@ function nextGuess_v1() {
 }
 
 function nextGuess_v2() {
+    artiHumanOptions = getArtiHumanOptions();
     let possibleColors = null;
     if (memory['correctColors'][0].length === 0) {
         //("correctColors == 0");
@@ -253,9 +254,14 @@ function nextGuess_v2() {
         //console.log("correctColors is this", memory['correctColors']);
         possibleColors = memory['correctColors'][0];
     }
-    let artiHumanGuess = guessRandom(possibleColors);
+    //let artiHumanGuess = guessRandom(possibleColors);
 
-    return playLikeHannes(possibleColors);
+    if (artiHumanOptions.includes('playLikeHannes')) {
+        let hannesGuess = playLikeHannes(possibleColors)
+        console.log("Last strategy: ", memory.strategy);
+        return hannesGuess;
+    }
+
 
     if(numberGameMoves === 1) {
         return playAABB(possibleColors);
@@ -549,7 +555,8 @@ function guessRandom_v2(possibleColors) {
     return randomGuess;
 }
 
-function drawRandomFromSolutionSet() {
+async function drawRandomFromSolutionSet() {
+    console.log("This is SolutionSet: ", solutionSet);
     let solutionArray = Array.from(solutionSet);
     let drawnGuess = solutionArray[Math.floor(Math.random() * solutionArray.length)];
 
@@ -559,11 +566,14 @@ function drawRandomFromSolutionSet() {
 }
 
 function diminishSolutionSpace(colorCombination, originalB, originalW) {
+
+    if (getArtiHumanOptions().length === 0){
+        return;
+    }
+
+
     //
-    // Compare all (remaining) guesses from solution space against the last played colorCombination
-    // Those, which will not give the same result as we got from the last played colorCombination
-    // against the real secret code are not consistent with the solution
-    // --> Delete all those, which do not return the same result in b and w
+
     let originalBW = [originalB, originalW];
 
     solutionSet.forEach(guess => {
@@ -571,15 +581,22 @@ function diminishSolutionSpace(colorCombination, originalB, originalW) {
         guess = guess.split("").map(Number);
         let amountInCode = 0;
         let copyCorrectColors = memory['correctColors'][0].slice(0);
-        //console.log(`Current guess => ${guess}`);
-/*
+        console.log(`Current guess => ${guess}`);
+
         // Check if other codes were the solution if the played code would give the same response
-        if (checkHintConsistency(guess, colorCombination, originalBW)) {
-            if (solutionSet.delete(guess.join(''))) {
-                console.log(`I deleted ${guess} because consistency - Remaining #Solutions = ${solutionSet.size}`);
+        if (artiHumanOptions.includes('consistency')) {
+            // Compare all (remaining) guesses from solution space against the last played colorCombination
+            // Those, which will not give the same result as we got from the last played colorCombination
+            // against the real secret code are not consistent with the solution
+            // --> Delete all those, which do not return the same result in b and w
+            if (checkHintConsistency(guess, colorCombination, originalBW)) {
+                if (solutionSet.delete(guess.join(''))) {
+                    console.log(`I deleted ${guess} because consistency - Remaining #Solutions = ${solutionSet.size}`);
+                }
             }
         }
-*/
+
+
         // Check for valid positioning
         let amountColors = [0, 0, 0, 0, 0, 0];
 
@@ -592,10 +609,10 @@ function diminishSolutionSpace(colorCombination, originalB, originalW) {
             // console.log("Memory IN position",memory[guess[i]]['inPosition']);
             // console.log("memory[guess[i]]['inPosition'][i] => ",memory[guess[i]]['inPosition'][i]);
             if (memory[guess[i]]['inPosition'][i] === -1) {
-                console.log("I will delete! ", guess);
+                //console.log("I will delete! ", guess);
                 if (solutionSet.delete(guess.join(''))) {
-                    //console.log(`I deleted ${guess} because ${guess[i]} can not be in Position ${i}
-                    //- Remaining #Solutions = ${solutionSet.size}`)
+                    console.log(`I deleted ${guess} because ${guess[i]} can not be in Position ${i}
+                    - Remaining #Solutions = ${solutionSet.size}`)
                     break;
                 }
             }
@@ -615,13 +632,13 @@ function diminishSolutionSpace(colorCombination, originalB, originalW) {
                 let indexOfPegInCorrectColors = copyCorrectColors.indexOf(guess[i]);
                 if (indexOfPegInCorrectColors === -1) {
                     if (solutionSet.delete(guess.join(''))) {
-                        console.log(`I deleted ${guess} because ${pegs[guess[i]]} it does not match with correctColors 
+                        console.log(`I deleted ${guess} because ${pegs[guess[i]]} it does not match with correctColors
                         ${memory['correctColors'][0]} (copy: ${copyCorrectColors}) - Remaining #Solutions = ${solutionSet.size}`)
                         break;
                     }
                 } else {
                     copyCorrectColors[indexOfPegInCorrectColors] = -1;
-                    console.log(`I set copyCorrectColors[${i}] to -1 => ${copyCorrectColors}`);
+                    //console.log(`I set copyCorrectColors[${i}] to -1 => ${copyCorrectColors}`);
                 }
             }
         }
@@ -631,9 +648,9 @@ function diminishSolutionSpace(colorCombination, originalB, originalW) {
         //TODO implement: countSimilarity() which returns how many pegs of the same color are in the same position
         if (memory.dumpCombinations[1].at(-1)[0] > countSimilarity(guess, memory.dumpCombinations[0].at(-1))) {
             if (solutionSet.delete(guess.join(''))) {
-                console.log(`I deleted ${guess} because b > similar ${guess}:${memory.dumpCombinations[0].at(-1)}
-                => ${memory.dumpCombinations[1].at(-1)[0]} ${countSimilarity(guess, memory.dumpCombinations.at(-1))}
-                 - Remaining #Solutions = ${solutionSet.size}`);
+               console.log(`I deleted ${guess} because b > similar ${guess}:${memory.dumpCombinations[0].at(-1)}
+               => ${memory.dumpCombinations[1].at(-1)[0]} ${countSimilarity(guess, memory.dumpCombinations.at(-1))}
+                - Remaining #Solutions = ${solutionSet.size}`);
             }
         }
 
@@ -652,10 +669,10 @@ function diminishSolutionSpace(colorCombination, originalB, originalW) {
                 continue;
             } else {
                 //console.log(`For guess ${guess}, on ${k} => amountColors[k] !== memory.amountColor[k] => ${amountColors[k]} !== ${memory.amountColor[k]}`);
-                if (amountColors[k] !== memory.amountColor[k]) {
+                if (amountColors[k] < memory.amountColor[k]) {
                     if (solutionSet.delete(guess.join(''))) {
-                        //console.log(`I deleted ${guess} because it has ${amountColors[k]} and not ${memory.amountColor[k]} of ${pegs[k+1]}
-                        //- Remaining #Solutions = ${solutionSet.size}`)
+                        console.log(`I deleted ${guess} because it has ${amountColors[k]} and not ${memory.amountColor[k]} of ${pegs[k+1]}
+                        - Remaining #Solutions = ${solutionSet.size}`)
                     }
                 }
             }
@@ -669,6 +686,12 @@ function diminishSolutionSpace(colorCombination, originalB, originalW) {
         console.log('memory.amountColor: ', JSON.stringify(memory.amountColor, null, 2));
         //throw Error('ArtiHuman: "Something went wrong. I deleted to much, I do not have any solutions left"');
     }
+}
+
+function compareWithBefore(guess, guessBefore) {
+    //TODO We compare the current and before guesses.
+    //If e.g. black Hints = black hintsbefore then-> every color that is different is NOT in the code
+    //If e.g. Hint is different b
 }
 
 function checkHintConsistency(basisGuess, basisColorCombination, originalBW) {
@@ -722,19 +745,24 @@ function countSimilarity(testGuess, guess) {
 }
 
 function playLikeHannes(possibleColors) {
+    console.log("I PLAYLIKEHANNES!")
+    console.log("numberGameMoves =>", numberGameMoves);
     switch (numberGameMoves) {
         case 1:
             memory.strategy[numberGameMoves - 1] = 'AABB';
             return playAABB(possibleColors);
         case 2:
+            console.log("I am in case2: ");
             if (memory.strategy.at(-1) === 'AABB') {
                 // Test for amount of colors, if first move returned b + w > 0, then single color, if not then repeat
                 //console.log(`%cRound ${numberGameMoves}: memory.dumpCombinations[1][0] => ${memory.dumpCombinations[1][0]}`, 'color: green;');
                 if (memory.dumpCombinations[1].at(-1)[0] + memory.dumpCombinations[1].at(-1)[1] > 0) {
                     memory.strategy[numberGameMoves - 1] = 'single';
-                    return playSingleColorOf(memory.dumpCombinations[0].at(-1)[0]);
+                    console.log("I am in case2 and play single")
+                    return playSingleColorOf(memory.dumpCombinations[0].at(-1)[0], memory.dumpCombinations[0].at(-1)[2]);
                 } else {
                     memory.strategy[numberGameMoves - 1] = 'AABB';
+                    console.log("I am in case2 and play AABB")
                     return playAABB(possibleColors);
                 }
             }
@@ -744,14 +772,25 @@ function playLikeHannes(possibleColors) {
                 //console.log(`%cRound ${numberGameMoves}: memory.dumpCombinations[1][0] => ${memory.dumpCombinations[1][0]}`, 'color: green;');
                 if (memory.dumpCombinations[1].at(-1)[0] + memory.dumpCombinations[1].at(-1)[1] > 0) {
                     memory.strategy[numberGameMoves - 1] = 'single';
-                    return playSingleColorOf(memory.dumpCombinations[0].at(-1)[0]);
+                    return playSingleColorOf(memory.dumpCombinations[0].at(-1)[0], memory.dumpCombinations[0].at(-1)[2]);
                 } else {
                     memory.strategy[numberGameMoves - 1] = 'AABB';
                     return playAABB(possibleColors);
                 }
             } else if (memory.strategy.at(-1) === 'single') {
                 memory.strategy[numberGameMoves - 1] = 'AABB';
-                return playAABB(possibleColors);
+                let returnGuess = playAABB(possibleColors);
+                //Check if colors have already been played
+                //Only use colors which have not been played so far
+                let whileExit = 50;
+                for (let m = 0; m < 50; m++) {
+                    returnGuess = playAABB(possibleColors)
+
+                    if ((memory[returnGuess[0]]['maybeInSecret'] || memory[returnGuess[2]]['maybeInSecret'])) {
+                        break;
+                    }
+                }
+                return returnGuess;
             }
 
         case 4:
@@ -760,7 +799,7 @@ function playLikeHannes(possibleColors) {
                 //console.log(`%cRound ${numberGameMoves}: memory.dumpCombinations[1][0] => ${memory.dumpCombinations[1][0]}`, 'color: green;');
                 if (memory.dumpCombinations[1].at(-1)[0] + memory.dumpCombinations[1].at(-1)[1] > 0) {
                     memory.strategy[numberGameMoves - 1] = 'single';
-                    return playSingleColorOf(memory.dumpCombinations[0].at(-1)[0]);
+                    return playSingleColorOf(memory.dumpCombinations[0].at(-1)[0], memory.dumpCombinations[0].at(-1)[2]);
                 } else {
                     memory.strategy[numberGameMoves - 1] = 'AABB';
                     return playAABB(possibleColors);
@@ -772,14 +811,19 @@ function playLikeHannes(possibleColors) {
 
 
         default:
+            console.log(`I should be in case: ${numberGameMoves}`);
             memory.strategy.push('random')
             return drawRandomFromSolutionSet();
 
     }
 
+
 }
 
-function playSingleColorOf(colorId) {
+function playSingleColorOf(colorId, alternativeColorId) {
+    if (checkIfGuessWasUsed([colorId, colorId, colorId, colorId])) {
+        return [alternativeColorId, alternativeColorId, alternativeColorId, alternativeColorId];
+    }
     return [colorId, colorId, colorId, colorId];
 }
 
@@ -792,7 +836,11 @@ function playAABB(possibleColors) {
         B = colorAABB[Math.floor(Math.random() * colorAABB.length)];
     }
     while (A === B)
-    return [A, A, B, B];
+    let aaBB = [A,A,B,B];
+    if (checkIfGuessWasUsed(aaBB)) {
+        return playAABB(aaBB);
+    }
+    return aaBB;
 }
 
 function testIfAABBWith(colorA, guess) {
@@ -823,7 +871,7 @@ function testIfSingleWith(guess) {
 }
 
 function checkIfGuessWasUsed(guess) {
-    //console.log(`guess @checkIfGuessWasUsed => `, guess);
+    console.log(`guess @checkIfGuessWasUsed => `, guess);
     if (guess.length !== 0 && memory['dumpCombinations'][0].length !== 0) {
         for (let dumpCombination of memory['dumpCombinations'][0]) {
             console.log(`dumpCombinations, guess => `, dumpCombination, guess);
@@ -867,11 +915,16 @@ function countBandW(hints) {
     return {b, w};
 }
 
-export function resetArtihuman() {
+export async function resetArtihuman() {
     numberArtiMoves = 0;
-    memory = buildMemory(pegs);
-    solutionSpace = printAllKLength([1, 2, 3, 4, 5, 6], 4);
-    solutionSet = new Set(solutionSpace);
+    numberGameMoves = 0;
+    memory = await buildMemory(pegs);
+    solutionSpace = await printAllKLength([1, 2, 3, 4, 5, 6], 4);
+    solutionSet = await new Set(solutionSpace);
+    //console.log(`I print memory => ${JSON.stringify(memory, null, 2)} \n
+    //                solutionSpace => ${JSON.stringify(solutionSpace, null, 2)} \n
+    //                solutionSet => ${JSON.stringify(solutionSet, null, 2)}`);
+//
 }
 
 export function getArtihumanGuess() {
@@ -880,12 +933,16 @@ export function getArtihumanGuess() {
     // return [1,1,2,2];
 }
 
-export function setArtihumanSlots(guess) {
+export async function setArtihumanSlots(guess) {
     console.log("guess in setSlots: ", guess);
-    let slots = getCurrentSlots();
+    console.log(artiHumanOptions);
+    let slots = await getCurrentSlots();
     for (let i = 0; i < guess.length; i++) {
         slots[i].className = `socket peg ${pegs[guess[i]]}`;
     }
     //return slots;
+}
+export function getNumberGameMoves() {
+    return numberGameMoves;
 }
 

@@ -26,6 +26,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="296c2370-720e-4070-974d-a8ad64b14d9c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/js-mastermind/js/autoPlayer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js-mastermind/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/js-mastermind/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js-mastermind/js/artihuman.js" beforeDir="false" afterPath="$PROJECT_DIR$/js-mastermind/js/artihuman.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js-mastermind/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js-mastermind/js/main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,7 +72,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="javascript.nodejs.core.library.configured.version" value="16.13.1" />
     <property name="javascript.nodejs.core.library.typings.version" value="16.11.18" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Documents/js-multiselect-dropdown-main" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.17" />
@@ -76,15 +81,13 @@
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2020.2.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -131,6 +134,16 @@
       <workItem from="1657395088091" duration="30138000" />
       <workItem from="1660490326507" duration="5704000" />
       <workItem from="1661079803319" duration="2186000" />
+      <workItem from="1661459943684" duration="12380000" />
+      <workItem from="1664215524710" duration="13998000" />
+      <workItem from="1664317530883" duration="1002000" />
+      <workItem from="1664537466567" duration="41996000" />
+      <workItem from="1664916055773" duration="13613000" />
+      <workItem from="1665130156261" duration="1226000" />
+      <workItem from="1665424135024" duration="1901000" />
+      <workItem from="1665521084858" duration="1076000" />
+      <workItem from="1666545025784" duration="1574000" />
+      <workItem from="1667082639859" duration="618000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1645703946256</created>
@@ -179,25 +192,35 @@
     <option name="LAST_COMMIT_MESSAGE" value="Added Artihuman" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="151" y="0" width="1096" height="708" key="SettingsEditor" timestamp="1651057891854">
+    <state x="-1512" y="450" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1666876994744">
+      <screen x="-3440" y="0" width="3440" height="1440" />
+    </state>
+    <state x="-1512" y="450" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.720/-3440.0.3440.1440@-3440.0.3440.1440" timestamp="1666876994744" />
+    <state x="447" y="77" key="#com.intellij.ide.util.MemberChooser" timestamp="1664632689138">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="151" y="0" key="SettingsEditor/0.0.1280.720@0.0.1280.720" timestamp="1651057891854" />
-    <state x="460" y="275" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1660297440603">
+    <state x="447" y="77" key="#com.intellij.ide.util.MemberChooser/0.0.1280.720@0.0.1280.720" timestamp="1664632689138" />
+    <state x="422" y="116" key="FileChooserDialogImpl" timestamp="1664217502903">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="460" y="275" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.720@0.0.1280.720" timestamp="1660297440603" />
-    <state x="298" y="161" key="run.anything.popup" timestamp="1656760699554">
+    <state x="422" y="116" key="FileChooserDialogImpl/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1664217502903" />
+    <state x="422" y="116" key="FileChooserDialogImpl/0.0.1280.720@0.0.1280.720" timestamp="1661612647824" />
+    <state x="245" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1664731873266">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="298" y="161" key="run.anything.popup/0.0.1280.720@0.0.1280.720" timestamp="1656760699554" />
+    <state x="245" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1664731873266" />
+    <state x="460" y="275" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1664716359891">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="460" y="275" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.720/-1920.0.1920.1080@0.0.1280.720" timestamp="1664308617181" />
+    <state x="460" y="275" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.720@0.0.1280.720" timestamp="1664716359891" />
     <state x="434" y="220" key="scopes" timestamp="1660298941355">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
     <state x="434" y="220" key="scopes/0.0.1280.720@0.0.1280.720" timestamp="1660298941355" />
-    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1651752765062">
+    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1664632148513">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1280.720@0.0.1280.720" timestamp="1651752765062" />
+    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1280.720@0.0.1280.720" timestamp="1664632148513" />
   </component>
 </project>
