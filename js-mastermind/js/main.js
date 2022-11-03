@@ -315,7 +315,7 @@ import {AutoPlayer as AutoPlayer} from "./autoPlayer.js";
       hideStartOverlay();
       readUserData();
     }
-    let artiHumanPlayersList = ['Steve', 'OliverBot']
+    let artiHumanPlayersList = ['Steve', 'IamArtihuman']
 
     if(!artiHumanPlayersList.includes(track.playerName)) {
       artihuman_button.style.display="none";
@@ -384,7 +384,7 @@ import {AutoPlayer as AutoPlayer} from "./autoPlayer.js";
       code[i] = Math.floor(Math.random() * (max - min)) + min;
     }
 
-    //code = [2,2,2,1];
+    //code = [5,6,5,6 ];
     track.correctCode = code.slice(0,4);
   }
 

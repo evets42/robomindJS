@@ -1,5 +1,4 @@
-//import {pegs} from "./main.js";
-import {getGuess, getInputRows, getHintStorage, getCurrentSlots, getRowIncrement, getArtiHumanOptions} from "./main.js";
+import {getCurrentSlots, getArtiHumanOptions} from "./main.js";
 
 
 const pegs = {
@@ -43,10 +42,10 @@ async function buildMemory(pegs) {
             isInSecret: false,    // Color is certainly in the secret
             maybeInSecret: false,   // Color was played at least once and might be in the secret
             notInSecret: false, // Color is certainly not in the secret
-            whites: [0, 0, 0, 0],
-            blacks: [0, 0, 0, 0],
+            whites: [0, 0, 0, 0], // Memorize how many white hints were received for the color in that position
+            blacks: [0, 0, 0, 0], // Memorize how many black hints were received for the color in that position
             inPosition: [0, 0, 0, 0], // +1 is definitely on this position, 0 no information, -1 definitely NOT in this position
-        } // TODO Add to memory, in which position the color received how many hints of black and white
+        }
     }
     //Initialize storage for used Combinations [0] + hint answers [1] ([0] = b, [1] = w)
     // e.g.
@@ -214,34 +213,9 @@ export function analyzeInputRows(inputRows, hintStorage) {
         }
     }
     //console.log(JSON.stringify(memory, null, 2));
-    //console.log('memory.amountColor: ', JSON.stringify(memory.amountColor, null, 2));
+    console.log('memory.amountColor: ', JSON.stringify(memory.amountColor, null, 2));
     //console.log('memory.pegs')
     //console.log(JSON.stringify(memory.amountColor, null, 2));
-}
-
-function nextGuess_v1() {
-    let possibleColors = null;
-    if (memory['correctColors'].length === 0) {
-        console.log("correctColors == 0");
-        possibleColors = setOfValidColors();
-    } else {
-        console.log("correctColors is this", memory['correctColors']);
-        possibleColors = memory['correctColors'];
-    }
-
-    //console.log(possibleColors);
-    //console.log(typeof nextGuess_v1[0]);
-    let artiHumanGuess = guessRandom(possibleColors);
-    //console.log(typeof temp[0]);
-    console.log("numberArtiMoves: ", numberArtiMoves);
-    if (numberArtiMoves === 4 || numberArtiMoves === 7) {
-        console.log("now guess on evidence");
-        artiHumanGuess = guessOnEvidence(possibleColors);
-    }
-    // TODO REWRITE GUESSONRANDOM_V2 SO IT INCLUDES CHECK FOR BLOCKED COLOR POSITIONS!!!
-
-    //console.log('temp: ', artiHumanGuess);
-    return artiHumanGuess;
 }
 
 function nextGuess_v2() {
@@ -256,8 +230,8 @@ function nextGuess_v2() {
     }
     //let artiHumanGuess = guessRandom(possibleColors);
 
-    if (artiHumanOptions.includes('playLikeHannes')) {
-        let hannesGuess = playLikeHannes(possibleColors)
+    if (artiHumanOptions.includes('ruleOutColors')) {
+        let hannesGuess = ruleOutColors(possibleColors)
         console.log("Last strategy: ", memory.strategy);
         return hannesGuess;
     }
@@ -269,10 +243,6 @@ function nextGuess_v2() {
         return drawRandomFromSolutionSet();
     }
 
-
-}
-
-function guessOnLastGuess() {
 
 }
 
@@ -570,10 +540,6 @@ function diminishSolutionSpace(colorCombination, originalB, originalW) {
     if (getArtiHumanOptions().length === 0){
         return;
     }
-
-
-    //
-
     let originalBW = [originalB, originalW];
 
     solutionSet.forEach(guess => {
@@ -645,7 +611,6 @@ function diminishSolutionSpace(colorCombination, originalB, originalW) {
 
         //If hint is b > 0, count how many has test-guess in common with last guess
         //This count has to be count >= b, otherwise delete the guess
-        //TODO implement: countSimilarity() which returns how many pegs of the same color are in the same position
         if (memory.dumpCombinations[1].at(-1)[0] > countSimilarity(guess, memory.dumpCombinations[0].at(-1))) {
             if (solutionSet.delete(guess.join(''))) {
                console.log(`I deleted ${guess} because b > similar ${guess}:${memory.dumpCombinations[0].at(-1)}
@@ -669,7 +634,7 @@ function diminishSolutionSpace(colorCombination, originalB, originalW) {
                 continue;
             } else {
                 //console.log(`For guess ${guess}, on ${k} => amountColors[k] !== memory.amountColor[k] => ${amountColors[k]} !== ${memory.amountColor[k]}`);
-                if (amountColors[k] < memory.amountColor[k]) {
+                if (amountColors[k] !== memory.amountColor[k]) {
                     if (solutionSet.delete(guess.join(''))) {
                         console.log(`I deleted ${guess} because it has ${amountColors[k]} and not ${memory.amountColor[k]} of ${pegs[k+1]}
                         - Remaining #Solutions = ${solutionSet.size}`)
@@ -686,12 +651,6 @@ function diminishSolutionSpace(colorCombination, originalB, originalW) {
         console.log('memory.amountColor: ', JSON.stringify(memory.amountColor, null, 2));
         //throw Error('ArtiHuman: "Something went wrong. I deleted to much, I do not have any solutions left"');
     }
-}
-
-function compareWithBefore(guess, guessBefore) {
-    //TODO We compare the current and before guesses.
-    //If e.g. black Hints = black hintsbefore then-> every color that is different is NOT in the code
-    //If e.g. Hint is different b
 }
 
 function checkHintConsistency(basisGuess, basisColorCombination, originalBW) {
@@ -725,8 +684,6 @@ function checkHintConsistency(basisGuess, basisColorCombination, originalBW) {
         }
     }
 
-    //console.log(`OriginalBW = ${originalBW[0]},${originalBW[1]} | B=${b},W=${w}`);
-
     if (b + w === originalBW[0] + originalBW[1]) {
         kickOut = false;
     }
@@ -744,8 +701,8 @@ function countSimilarity(testGuess, guess) {
     return count;
 }
 
-function playLikeHannes(possibleColors) {
-    console.log("I PLAYLIKEHANNES!")
+function ruleOutColors(possibleColors) {
+    console.log("I Rule out colors!")
     console.log("numberGameMoves =>", numberGameMoves);
     switch (numberGameMoves) {
         case 1:
@@ -779,14 +736,12 @@ function playLikeHannes(possibleColors) {
                 }
             } else if (memory.strategy.at(-1) === 'single') {
                 memory.strategy[numberGameMoves - 1] = 'AABB';
-                let returnGuess = playAABB(possibleColors);
+                let returnGuess;
                 //Check if colors have already been played
                 //Only use colors which have not been played so far
-                let whileExit = 50;
                 for (let m = 0; m < 50; m++) {
                     returnGuess = playAABB(possibleColors)
-
-                    if ((memory[returnGuess[0]]['maybeInSecret'] || memory[returnGuess[2]]['maybeInSecret'])) {
+                    if ((!memory[returnGuess[0]]['maybeInSecret'] && !memory[returnGuess[2]]['maybeInSecret'])) {
                         break;
                     }
                 }
