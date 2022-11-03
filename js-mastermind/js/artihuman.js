@@ -630,11 +630,13 @@ function diminishSolutionSpace(colorCombination, originalB, originalW) {
             // If we dont have information on amount of colors (==-1)
             //      OR we counted 0 in current guess then skip (gets deleted elsewhere)
             //console.log(`For guess ${guess}, on k${k} memory.amountColors => ${memory.amountColor}`);
-            if (memory.amountColor[k] === -1) {
+            if (memory.amountColor[k] === -1 || memory.amountColor[k] === 0) {
                 continue;
             } else {
                 //console.log(`For guess ${guess}, on ${k} => amountColors[k] !== memory.amountColor[k] => ${amountColors[k]} !== ${memory.amountColor[k]}`);
-                if (amountColors[k] !== memory.amountColor[k]) {
+                //delete if the number in the guess is smaller than amount of colors in memory
+                // if the number in memory is certainly 1, then delete everything which does not match
+                if (amountColors[k] < memory.amountColor[k] || (amountColors[k] !== memory.amountColor[k] && memory.amountColor[k] === 1)) {
                     if (solutionSet.delete(guess.join(''))) {
                         console.log(`I deleted ${guess} because it has ${amountColors[k]} and not ${memory.amountColor[k]} of ${pegs[k+1]}
                         - Remaining #Solutions = ${solutionSet.size}`)
