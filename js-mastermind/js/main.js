@@ -242,7 +242,7 @@ import {AutoPlayer as AutoPlayer} from "./autoPlayer.js";
       if (feedbackTemp.length >= 10) {
         hideRestart();
 
-        document.getElementById("submit").disabled = true;
+        //document.getElementById("submit").disabled = true;
         let guessTemp = guess.slice();
         // TRACKER INPUT
         // - ADD GUESSES IN CURRENT ROUND
